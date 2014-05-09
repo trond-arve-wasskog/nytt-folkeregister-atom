@@ -8,8 +8,8 @@ Tenkt implementasjon av nytt folkeregister med bruk av Atom-feeds for publiserin
 Hovedområder/Epics/Målsetninger med PoC:
 * Vurdere immutable datamodell for lagring, oppdatering, spørring, ytelse, konsistens, itegritet.
 * Vurdere Atom feeds som mekanisme for publisering av data
-** Konfidensialitet og integritet med kryptering og signering av content
-** Benytte standard HTTP/Atom-egenspaker som caching, komprimering
+ * Konfidensialitet og integritet med kryptering og signering av content
+ * Benytte standard HTTP/Atom-egenspaker som caching, komprimering
 * Teste ytelse, robusthet og skalerbarhet med realistiske volumer (7 millioner personer)
 
 Foreløpige tanker:
