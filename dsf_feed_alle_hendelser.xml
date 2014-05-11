@@ -11,9 +11,9 @@
         <id>urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a</id>
         <updated>2003-08-03T18:30:02CEST</updated>
         <category term=”flytting”/>
-        <link rel="full_info" href=" http://dsf.no/api/v1/05047954321/"/>
-        <link rel="bosted" href=" http://dsf.no/api/v1/05047954321/bosted"/>
-        <link rel="forrige_bosted" href=" http://dsf.no/api/v1/05047954321/bosted/forrige"/>
+        <link rel="person" href=" http://dsf.no/api/v1/person/05047954321/"/>
+        <link rel="bosted" href=" http://dsf.no/api/v1/person/05047954321/bosted"/>
+        <link rel="forrige_bosted" href=" http://dsf.no/api/v1/person/05047954321/bosted/forrige"/>
     </entry>
     <entry>
         ...
