@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"
+      xmlns:fh="http://purl.org/syndication/history/1.0">
+    <title>DSF – alle hendelser</title>
+    <link href="http://dsf.no/api/v1/hendelser/"/>
+    <link rel="self" href=" http://dsf.no/api/v1/hendelser/2014-08-03"/>
+    <link rel="prev-archive" href=" http://dsf.no/api/v1/hendelser/2014-08-02"/>
+    <updated>2014-08-03T18:30:02CEST</updated>
+    <id>urn:uuid:60a76c80-d399-11d9-b93C-0003939e0af6</id>
+    <entry>
+        <id>urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a</id>
+        <updated>2003-08-03T18:30:02CEST</updated>
+        <category term=”flytting”/>
+        <link rel="person" href=" http://dsf.no/api/v1/person/05047954321/"/>
+        <link rel="bosted" href=" http://dsf.no/api/v1/person/05047954321/bosted"/>
+        <link rel="forrige_bosted" href=" http://dsf.no/api/v1/person/05047954321/bosted/forrige"/>
+    </entry>
+    <entry>
+        ...
+    </entry>
+</feed>
