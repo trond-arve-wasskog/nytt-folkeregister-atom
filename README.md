@@ -1,9 +1,9 @@
 nytt-folkeregister-atom
 =======================
 
-Tenkt implementasjon av nytt folkeregister med bruk av Atom-feeds for publisering. Modernisering av Folkeregisteret er på trappene (kan komme i 2015, avhengig av prioritering på statsbudsjettet), dette kan være et innspill til tilnærming og plattform.
-
-[Hva som lagres i folkeregisteret (PDF)] (http://www.regjeringen.no/upload/FIN/Vedlegg/sl/Rapporter/Vedlegg%202%20Hva%20som%20registreres%20i%20Folkeregisteret.pdf)
+Tenkt implementasjon av nytt folkeregister med bruk av Atom-feeds for publisering. Modernisering av Folkeregisteret er på trappene (kan komme i 2015, avhengig av prioritering på statsbudsjettet), dette kan være et innspill til tilnærming og plattform:
+* [Dokument fra dialogkonferansen] (http://www.regjeringen.no/upload/subnettsteder/framtidens_byer/Forbruk%20og%20avfall/2014/InvitasjonDialogkonferanse.pdf) viser overordnede behov og krav til nytt folkeregister.
+* [Hva som lagres i folkeregisteret (PDF)] (http://www.regjeringen.no/upload/FIN/Vedlegg/sl/Rapporter/Vedlegg%202%20Hva%20som%20registreres%20i%20Folkeregisteret.pdf)
 
 Hovedområder/Epics/Målsetninger med PoC:
 * Vurdere immutable datamodell for lagring, oppdatering, spørring, ytelse, konsistens, itegritet.
