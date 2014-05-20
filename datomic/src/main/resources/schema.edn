@@ -1,0 +1,90 @@
+[
+ ;; person bosatt
+
+ {:db/id #db/id[:db.part/db]
+  :db/ident :person/name
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db/fulltext true
+  :db/doc "Fullt navn"
+  :db.install/_attribute :db.part/db}
+
+ {:db/id #db/id[:db.part/db]
+  :db/ident :person/birthplace
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db/doc "Fødested"
+  :db.install/_attribute :db.part/db}
+
+ ;; registreringsstatus  ## enum ##
+ ;; statsborgerskap
+ ;; fradømt stemmerett  ## boolean/enum JA/NEI ##
+ ;; umyndiggjort  ## boolean/enum JA/NEI ##
+ ;; verge
+ ;; hjelpeverge
+ ;; sted/myndighet sivilstand
+ ;; dato for sivilstand
+
+ {:db/id #db/id[:db.part/db]
+   :db/ident :person/sivilstatus
+   :db/valueType :db.type/ref
+   :db/cardinality :db.cardinality/one
+   :db/doc "Sivilstand"
+   :db.install/_attribute :db.part/db}
+
+ ;; aktuell adresse  ## egen type ##
+ ;; adressetype  ## enum ##
+ ;; postnummer
+ ;; kretser
+ ;; innflytting fra kommune/land
+ ;; utflytting til kommune/land
+ ;; dødsdato
+ ;; familienummer
+ ;; dato for familienummer
+ ;; personkode
+ ;; fars fødselsnummer
+ ;; mors fødselsnummer
+ ;; ektefelles/registrert partners fødselsnummer
+ ;; barns fødselsnummer  ## multi verdi ##
+ ;; spesifisert registreringstype  ## enum ##
+ ;; dato for spesifisert registreringstype
+ ;; foreldreansvar  ## enum ##
+ ;; dato for endring av foreldreansvar
+ ;; arbeidsgiver
+ ;; yrke
+ ;; arbeidstillatelse  ## boolean/enum JA/NEI ##
+ ;; arbeidstillatelsens varighet
+ ;; tilhørighet til Den norske kirke
+ ;; merknad (hjemmel) for hver opplysning
+ ;; henvisning til journal
+ ;; oppholdstillatelse
+ ;; oppholdstillatelsens lengde
+
+ ;; person/sivilstatus enum values
+ [:db/add #db/id[:db.part/user] :db/ident :person.sivilstatus/ugift]
+ [:db/add #db/id[:db.part/user] :db/ident :person.sivilstatus/gift]
+ [:db/add #db/id[:db.part/user] :db/ident :person.sivilstatus/enke-enkemann]
+ [:db/add #db/id[:db.part/user] :db/ident :person.sivilstatus/skilt]
+ [:db/add #db/id[:db.part/user] :db/ident :person.sivilstatus/separert]
+ [:db/add #db/id[:db.part/user] :db/ident :person.sivilstatus/registrert-partner]
+ [:db/add #db/id[:db.part/user] :db/ident :person.sivilstatus/separert-partner]
+ [:db/add #db/id[:db.part/user] :db/ident :person.sivilstatus/skilt-partner]
+ [:db/add #db/id[:db.part/user] :db/ident :person.sivilstatus/gjenlevende-partner]
+
+ ;; person ikke bosatt
+
+ ;; fødselsdato (dag, måned, år)
+ ;; kjønn
+ ;; etternavn
+ ;; fornavn
+ ;; mellomnavn
+ ;; statsborgerskap
+ ;; sivilstand
+ ;; rekvirert av
+ ;; trygdekontornummer
+ ;; legitimasjon
+ ;; MAA (Maritimt AA-reg) referansenummer
+ ;; arbeidsgiver
+ ;; DUF-nr
+ ;; merknad
+]

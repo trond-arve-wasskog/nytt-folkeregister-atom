@@ -1,9 +1,6 @@
 package ske.folkeregister.datomic;
 
-import datomic.Connection;
-import datomic.Database;
-import datomic.Peer;
-import datomic.Util;
+import datomic.*;
 
 import java.io.InputStreamReader;
 import java.util.List;
@@ -16,35 +13,73 @@ import static datomic.Connection.TEMPIDS;
 import static datomic.Peer.tempid;
 import static datomic.Util.list;
 import static datomic.Util.map;
+import static datomic.Util.read;
 
-/**
- * Example inspired by https://github.com/Datomic/datomic-java-examples just to get started..
- */
 @SuppressWarnings("unchecked")
 public class TestRunner {
 
    public static void main(String[] args) throws ExecutionException, InterruptedException {
+      // Opprett ny inmemory database
       final Connection conn = newMemConnection();
 
-      transactAllFromFile(conn, "accounts.edn");
+      // Legg inn db-skjema
+      transactAllFromFile(conn, "schema.edn");
 
-      Object account = tempid("db.part/user");
-      Map txResult = conn.transact(list(map("db/id", account, "account/balance", 100))).get();
-      account = Peer.resolveTempid((Database)txResult.get(DB_AFTER), txResult.get(TEMPIDS),  account);
+      // Legg inn en person
+      Object tmpId = tempid("db.part/user");
+      Map txResult = conn.transact(list(map(
+         "db/id", tmpId,
+         "person/name", "Eivind Barstad Waaler",
+         "person/birthplace", "Oslo",
+         "person/sivilstatus", read(":person.sivilstatus/ugift")
+      ))).get();
+      final Object personId = Peer.resolveTempid((Database) txResult.get(DB_AFTER), txResult.get(TEMPIDS), tmpId);
 
-      System.out.println("CAS from 100->110 should succeed");
-      conn.transact(list(list("db.fn/cas", account, "account/balance", 100, 110))).get();
+      // Skriv ut navn + sivilstand
+      Entity entity = conn.db().entity(personId);
+      System.out.println(entity.get(":person/name") + " " + entity.get(":person/sivilstatus"));
 
-      System.out.println("CAS from 100->120 should fail");
-      try {
-         conn.transact(list(list("db.fn/cas", account, "account/balance", 100, 120))).get();
-      } catch (Throwable t) {
-         System.out.println("Failed with " + t.getMessage());
-      }
+      sleepPrint(5);
 
-      System.out.println("Balance is " + conn.db().entity(account).get("account/balance"));
+      // Endre sivilstand til gift
+      conn.transact(list(map(
+         "db/id", personId,
+         "person/sivilstatus", read(":person.sivilstatus/gift")
+      ))).get();
+
+      // Skriv ut navn + sivilstand igjen
+      entity = conn.db().entity(personId);
+      System.out.println(entity.get(":person/name") + " " + entity.get(":person/sivilstatus"));
+
+      // Grav litt i historikken til person
+      // Fra August Lilleaas: http://dbs-are-fn.com/2013/datomic_history_of_an_entity/
+      System.out.println("\n### Endringer i sivilstand for person: ###");
+      Peer
+         .q("[:find ?tx ?a :in $ ?e :where [?e ?a _ ?tx]]", conn.db().history(), personId)
+         .stream()
+         .map(list -> conn.db().entity(list.get(0)))
+         .distinct()
+         .sorted((e1, e2) -> ((Comparable) e1.get(":db/txInstant")).compareTo(e2.get(":db/txInstant")))
+         .map(tx -> {
+            final Database db = conn.db();
+            return map(
+               "timestamp", tx.get(":db/txInstant"),
+               "before", db.asOf(((long)tx.get(":db/id")) - 1).entity(personId).get(":person/sivilstatus"),
+               "after", db.asOf(tx.get(":db/id")).entity(personId).get(":person/sivilstatus")
+            );
+         })
+         .forEach(System.out::println);
 
       System.exit(0);
+   }
+
+   private static void sleepPrint(int seconds) throws InterruptedException {
+      System.out.print("Sover i " + seconds + " sek.");
+      for(int i = 0; i < seconds; i++) {
+         Thread.sleep(1_000);
+         System.out.print(".");
+      }
+      System.out.println();
    }
 
    private static void transactAllFromFile(Connection conn, String filename) throws InterruptedException, ExecutionException {
