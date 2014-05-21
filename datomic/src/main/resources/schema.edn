@@ -32,7 +32,13 @@
    :db/doc "Sivilstand"
    :db.install/_attribute :db.part/db}
 
- ;; aktuell adresse  ## egen type ##
+ {:db/id #db/id[:db.part/db]
+   :db/ident :person/address
+   :db/valueType :db.type/ref
+   :db/cardinality :db.cardinality/one
+   :db/doc "Aktuell adresse"
+   :db.install/_attribute :db.part/db}
+
  ;; adressetype  ## enum ##
  ;; postnummer
  ;; kretser
@@ -70,6 +76,41 @@
  [:db/add #db/id[:db.part/user] :db/ident :person.sivilstatus/separert-partner]
  [:db/add #db/id[:db.part/user] :db/ident :person.sivilstatus/skilt-partner]
  [:db/add #db/id[:db.part/user] :db/ident :person.sivilstatus/gjenlevende-partner]
+
+ ;; Adresse type
+
+ ;; Registreringsdato
+ ;; Flyttedato
+ ;; Kommunenummer
+
+ {:db/id #db/id[:db.part/db]
+  :db/ident :address/street
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db/fulltext true
+  :db/doc "Gatekode/gårdsnummer"
+  :db.install/_attribute :db.part/db}
+
+ ;; Adressenavn
+
+ {:db/id #db/id[:db.part/db]
+  :db/ident :address/streetnumber
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db/doc "Husnummer/bruksnummer"
+  :db.install/_attribute :db.part/db}
+
+ ;; Bokstav/festenummer
+ ;; Undernummer
+ ;; Leilighetsnummer
+
+ {:db/id #db/id[:db.part/db]
+  :db/ident :address/postnumber
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db/fulltext true
+  :db/doc "Postnummer"
+  :db.install/_attribute :db.part/db}
 
  ;; person ikke bosatt
 
