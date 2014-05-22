@@ -16,6 +16,15 @@
   :db/doc "Fødested"
   :db.install/_attribute :db.part/db}
 
+ {:db/id #db/id[:db.part/db]
+  :db/ident :person/ssn
+  :db/unique :db.unique/identity
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db/fulltext true
+  :db/doc "Fødselsnummer"
+  :db.install/_attribute :db.part/db}
+
  ;; registreringsstatus  ## enum ##
  ;; statsborgerskap
  ;; fradømt stemmerett  ## boolean/enum JA/NEI ##
@@ -108,7 +117,6 @@
   :db/ident :address/postnumber
   :db/valueType :db.type/string
   :db/cardinality :db.cardinality/one
-  :db/fulltext true
   :db/doc "Postnummer"
   :db.install/_attribute :db.part/db}
 

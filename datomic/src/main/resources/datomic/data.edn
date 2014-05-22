@@ -1,0 +1,6 @@
+[
+{:db/id #db/id[:db.part/user -1000001], :address/street "Majorstuveien",:address/streetnumber "16", :address/postnumber "0367"}
+{:db/id #db/id[:db.part/user -1000002], :person/name "Eivind Waaler", :person/birthplace "Oslo", :person/ssn "19107612345", :person/sivilstatus :person.sivilstatus/ugift, :person/address #db/id[:db.part/user -1000001]}
+{:db/id #db/id[:db.part/user -1000003], :person/name "Ola Nordmann", :person/birthplace "Trondheim", :person/ssn "23013454321"}
+{:db/id #db/id[:db.part/user -1000004], :person/name "Kari Nordmann", :person/birthplace "Oslo", :person/ssn "02100811144"}
+]

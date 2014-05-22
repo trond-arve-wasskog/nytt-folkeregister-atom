@@ -1,7 +1,6 @@
-package ske.folkeregister.datomic;
+package ske.folkeregister.datomic.util;
 
 import datomic.Database;
-import datomic.Entity;
 import datomic.Peer;
 
 import java.util.List;
@@ -44,20 +43,15 @@ public class Changes {
          .map(list -> {
             final Long tx = (Long) list.get(0);
             final Object attr = list.get(1);
+
             final Database dbBefore = db.asOf(tx - 1);
             final Database dbAfter = db.asOf(tx);
+
             final Object attrBefore = dbBefore.entity(attr).get(":db/ident");
             final Object attrAfter = dbAfter.entity(attr).get(":db/ident");
 
-            Object oldVal = dbBefore.entity(entityId).get(attrBefore);
-            Object newVal = dbAfter.entity(entityId).get(attrAfter);
-
-            if (oldVal instanceof Entity) {
-               ((Entity) oldVal).touch();
-            }
-            if (newVal instanceof Entity) {
-               ((Entity) newVal).touch();
-            }
+            final Object oldVal = IO.attrToValue(dbBefore.entity(entityId), attrBefore);
+            final Object newVal = IO.attrToValue(dbAfter.entity(entityId), attrAfter);
 
             return map(
                attrAfter, map(
