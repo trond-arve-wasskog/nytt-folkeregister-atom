@@ -65,6 +65,11 @@ public class DatomicPersonApi implements PersonApi {
       return Changes.changeOverTimeForEntity(conn.db(), personId);
    }
 
+   @Override
+   public Map getPerson(String ssn) throws Exception {
+      return IO.entityToMap(conn.db().entity(lookupRef(ssn)));
+   }
+
    private Optional<Object> findPersonBySSN(String ssn) {
       return Optional.ofNullable(conn.db().entid(lookupRef(ssn)));
    }

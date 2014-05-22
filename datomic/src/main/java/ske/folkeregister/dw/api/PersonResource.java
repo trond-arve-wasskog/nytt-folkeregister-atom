@@ -28,4 +28,10 @@ public class PersonResource {
    public Object changes(@PathParam("ssn") String ssn) throws Exception {
       return personApi.changesForPerson(ssn);
    }
+
+   @GET
+   @Path("{ssn}")
+   public Object get(@PathParam("ssn") String ssn) throws Exception {
+      return personApi.getPerson(ssn);
+   }
 }

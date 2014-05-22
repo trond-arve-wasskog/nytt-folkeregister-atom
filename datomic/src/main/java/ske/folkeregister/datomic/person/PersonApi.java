@@ -11,4 +11,6 @@ public interface PersonApi {
    void moveToNewAddress(String ssn, String street, String number, String postnumber) throws Exception;
 
    List<Map> changesForPerson(String ssn) throws Exception;
+
+   Map getPerson(String ssn) throws Exception;
 }
