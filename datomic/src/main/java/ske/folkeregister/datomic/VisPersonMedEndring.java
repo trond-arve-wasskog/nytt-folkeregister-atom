@@ -41,7 +41,7 @@ public class VisPersonMedEndring {
 
       // Grav litt i historikken til person
       System.out.println("\n### Endringer for person: ###");
-      Changes.changeOverTimeForObj(conn, personId).forEach(changeset -> {
+      Changes.changeOverTimeForEntity(conn.db(), personId).forEach(changeset -> {
          System.out.println("\nTidspunkt: " + changeset.get(":timestamp"));
          System.out.println("Endringer:");
          ((List)changeset.get(":changes")).forEach(obj -> System.out.println("\t" + obj));
