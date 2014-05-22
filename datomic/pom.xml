@@ -12,6 +12,8 @@
       <!-- Dependency versions -->
       <jdk.version>1.8</jdk.version>
       <datomic.version>0.9.4766</datomic.version>
+      <dropwizard.version>0.7.0</dropwizard.version>
+      <jackson.version>2.3.2</jackson.version>
       <!-- Plugin versions -->
       <maven-compiler-plugin.version>3.0</maven-compiler-plugin.version>
       <!-- Other properties -->
@@ -22,42 +24,72 @@
          <groupId>com.datomic</groupId>
          <artifactId>datomic-free</artifactId>
       </dependency>
+      <dependency>
+         <groupId>io.dropwizard</groupId>
+         <artifactId>dropwizard-core</artifactId>
+      </dependency>
    </dependencies>
    <dependencyManagement>
       <dependencies>
-	<dependency>
-	  <groupId>com.datomic</groupId>
-	  <artifactId>datomic-free</artifactId>
-	  <version>${datomic.version}</version>
-	</dependency>
+         <dependency>
+            <groupId>com.datomic</groupId>
+            <artifactId>datomic-free</artifactId>
+            <version>${datomic.version}</version>
+            <exclusions>
+               <exclusion>
+                  <groupId>org.slf4j</groupId>
+                  <artifactId>slf4j-nop</artifactId>
+               </exclusion>
+            </exclusions>
+         </dependency>
+         <dependency>
+            <groupId>io.dropwizard</groupId>
+            <artifactId>dropwizard-core</artifactId>
+            <version>${dropwizard.version}</version>
+         </dependency>
+         <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+         </dependency>
+         <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+         </dependency>
+         <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson.version}</version>
+         </dependency>
       </dependencies>
    </dependencyManagement>
    <repositories>
-     <repository>
-       <id>Datomic</id>
-       <name>Datomic</name>
-       <url>http://files.datomic.com/maven</url>
-       <releases>
-	 <enabled>true</enabled>
-       </releases>
-       <snapshots>
-	 <enabled>false</enabled>
-       </snapshots>
-     </repository>
-     <repository>
-       <id>clojars.org</id>
-       <url>http://clojars.org/repo</url>
-     </repository>
-     <repository>
-       <id>clojure-releases</id>
-       <url>http://build.clojure.org/releases</url>
-       <releases>
-	 <enabled>true</enabled>
-       </releases>
-       <snapshots>
-	 <enabled>false</enabled>
-       </snapshots>
-     </repository>
+      <repository>
+         <id>Datomic</id>
+         <name>Datomic</name>
+         <url>http://files.datomic.com/maven</url>
+         <releases>
+            <enabled>true</enabled>
+         </releases>
+         <snapshots>
+            <enabled>false</enabled>
+         </snapshots>
+      </repository>
+      <repository>
+         <id>clojars.org</id>
+         <url>http://clojars.org/repo</url>
+      </repository>
+      <repository>
+         <id>clojure-releases</id>
+         <url>http://build.clojure.org/releases</url>
+         <releases>
+            <enabled>true</enabled>
+         </releases>
+         <snapshots>
+            <enabled>false</enabled>
+         </snapshots>
+      </repository>
    </repositories>
    <build>
       <plugins>
