@@ -28,6 +28,10 @@
          <groupId>io.dropwizard</groupId>
          <artifactId>dropwizard-core</artifactId>
       </dependency>
+      <dependency>
+         <groupId>io.dropwizard</groupId>
+         <artifactId>dropwizard-assets</artifactId>
+      </dependency>
    </dependencies>
    <dependencyManagement>
       <dependencies>
@@ -36,6 +40,11 @@
             <artifactId>datomic-free</artifactId>
             <version>${datomic.version}</version>
             <exclusions>
+               <!-- Fix logging -->
+               <exclusion>
+                  <groupId>org.slf4j</groupId>
+                  <artifactId>slf4j-log4j12</artifactId>
+               </exclusion>
                <exclusion>
                   <groupId>org.slf4j</groupId>
                   <artifactId>slf4j-nop</artifactId>
@@ -47,6 +56,12 @@
             <artifactId>dropwizard-core</artifactId>
             <version>${dropwizard.version}</version>
          </dependency>
+         <dependency>
+            <groupId>io.dropwizard</groupId>
+            <artifactId>dropwizard-assets</artifactId>
+            <version>${dropwizard.version}</version>
+         </dependency>
+         <!-- To fix same version between datomic and dropwizard -->
          <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
