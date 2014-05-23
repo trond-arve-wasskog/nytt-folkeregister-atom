@@ -7,13 +7,13 @@ import datomic.Peer;
 import ske.folkeregister.datomic.util.Changes;
 import ske.folkeregister.datomic.util.IO;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static datomic.Peer.tempid;
 import static datomic.Util.*;
+import static datomic.Util.list;
+import static datomic.Util.map;
 
 public class DatomicPersonApi implements PersonApi {
 
@@ -27,7 +27,7 @@ public class DatomicPersonApi implements PersonApi {
    public List<Object> findAllPersons() {
       final Database db = conn.db();
       return Peer
-         .q("[:find ?p :where [?p :person/name]]", db)
+         .q("[:find ?p :where [?p :person/ssn]]", db)
          .stream()
          .map(list -> resultListToEntityMap(db, list))
          .collect(Collectors.toList());
@@ -35,11 +35,11 @@ public class DatomicPersonApi implements PersonApi {
 
    @Override
    public void changeNameAndStatus(String ssn, String newName, String newStatus) throws Exception {
-      conn.transact(list(map(
-         ":db/id", lookupRef(ssn),
-         ":person/sivilstatus", read(":person.sivilstatus/gift"),
-         ":person/name", "Eivind Barstad Waaler"
-      ))).get();
+      updatePerson(map(
+         ":person/ssn", ssn,
+         ":person/sivilstatus", read(newStatus),
+         ":person/name", newName
+      ));
    }
 
    @Override
@@ -61,13 +61,27 @@ public class DatomicPersonApi implements PersonApi {
 
    @Override
    public List<Map> changesForPerson(String ssn) throws Exception {
-      final Object personId = findPersonBySSN(ssn).get();
-      return Changes.changeOverTimeForEntity(conn.db(), personId);
+      return findPersonBySSN(ssn)
+         .map(id -> Changes.changeOverTimeForEntity(conn.db(), id))
+         .orElse(Collections.<Map>emptyList());
    }
 
    @Override
    public Map getPerson(String ssn) throws Exception {
-      return IO.entityToMap(conn.db().entity(lookupRef(ssn)));
+      return findPersonBySSN(ssn)
+         .map(id -> conn.db().entity(id))
+         .map(IO::entityToMap)
+         .orElse(Collections.emptyMap());
+   }
+
+   @Override
+   public void updatePerson(Map person) throws Exception {
+      final HashMap<Object, Object> txMap = new HashMap<>();
+
+      txMap.put(":db/id", tempid("db.part/user"));
+      txMap.putAll(person);
+
+      conn.transact(list(txMap)).get();
    }
 
    private Optional<Object> findPersonBySSN(String ssn) {

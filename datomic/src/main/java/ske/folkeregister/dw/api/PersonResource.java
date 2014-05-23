@@ -2,11 +2,9 @@ package ske.folkeregister.dw.api;
 
 import ske.folkeregister.datomic.person.PersonApi;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.Map;
 
 @Path("persons")
 @Produces(MediaType.APPLICATION_JSON)
@@ -33,5 +31,10 @@ public class PersonResource {
    @Path("{ssn}")
    public Object get(@PathParam("ssn") String ssn) throws Exception {
       return personApi.getPerson(ssn);
+   }
+
+   @POST
+   public void update(Map person) throws Exception {
+      personApi.updatePerson(person);
    }
 }

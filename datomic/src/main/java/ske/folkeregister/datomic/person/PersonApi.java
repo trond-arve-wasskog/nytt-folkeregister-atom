@@ -13,4 +13,6 @@ public interface PersonApi {
    List<Map> changesForPerson(String ssn) throws Exception;
 
    Map getPerson(String ssn) throws Exception;
+
+   void updatePerson(Map person) throws Exception;
 }
