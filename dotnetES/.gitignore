@@ -59,3 +59,5 @@ Uploads/*
 # Ignoring ncrunch stuff
 *.ncrunchsolution
 *.ncrunchsolution.user
+
+*.sln.ide
