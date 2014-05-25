@@ -8,7 +8,7 @@ namespace Folkeregister.Domain
 {
     public class DomainEntry
     {
-        private CommandDispatcher _commandDispatcher;
+        private readonly CommandDispatcher _commandDispatcher;
 
         public DomainEntry(IDomainRepository domainRepository, IEnumerable<Action<ICommand>> preExecutionPipe = null, IEnumerable<Action<object>> postExecutionPipe = null)
         {

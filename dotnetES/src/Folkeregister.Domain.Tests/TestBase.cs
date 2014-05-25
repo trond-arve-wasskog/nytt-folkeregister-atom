@@ -52,7 +52,7 @@ namespace Folkeregister.Domain.Tests
         protected void Given(params IEvent[] existingEvents)
         {
             _preConditions = existingEvents
-                .GroupBy(y => (Guid)(y as dynamic).Id)
+                .GroupBy(y => y.Id)
                 .ToDictionary(y => y.Key, y => y.AsEnumerable());
         }
     }

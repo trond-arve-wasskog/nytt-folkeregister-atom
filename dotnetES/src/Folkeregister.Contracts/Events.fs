@@ -4,7 +4,8 @@ open Folkeregister.Infrastructure
 open System
 
 type PersonCreated = {Id: Guid; SSN: SSN; Name: Name} 
-    with interface IEvent
+    with interface IEvent with member this.Id with get() = this.Id
+
 
 //type OrderCreated = 
 //    {Id: Guid; UserId: Guid; ProductId: Guid; Quantity: int}
