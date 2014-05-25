@@ -6,16 +6,18 @@ import io.dropwizard.Configuration;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import ske.folkeregister.datomic.feed.FeedGenerator;
 import ske.folkeregister.datomic.person.DatomicPersonApi;
 import ske.folkeregister.datomic.person.PersonApi;
 import ske.folkeregister.datomic.util.IO;
 import ske.folkeregister.dw.api.PersonResource;
 import ske.folkeregister.dw.managed.DatomicConnectionManager;
+import ske.folkeregister.dw.managed.ThreadManager;
 
 public class Server extends Application<Configuration> {
 
    public static void main(String[] args) throws Exception {
-      new Server().run(new String[]{"server"});
+      new Server().run(new String[]{"server", "src/main/conf/config.yml"});
    }
 
    @Override
@@ -34,5 +36,6 @@ public class Server extends Application<Configuration> {
       env.jersey().register(new PersonResource(personApi));
 
       env.lifecycle().manage(new DatomicConnectionManager(conn));
+      env.lifecycle().manage(new ThreadManager(new FeedGenerator(conn)));
    }
 }

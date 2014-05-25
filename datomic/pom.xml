@@ -13,6 +13,7 @@
       <jdk.version>1.8</jdk.version>
       <datomic.version>0.9.4766</datomic.version>
       <dropwizard.version>0.7.0</dropwizard.version>
+      <jersey.version>1.18.1</jersey.version>
       <jackson.version>2.3.2</jackson.version>
       <junit.version>4.11</junit.version>
       <!-- Plugin versions -->
@@ -32,6 +33,10 @@
       <dependency>
          <groupId>io.dropwizard</groupId>
          <artifactId>dropwizard-assets</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>com.sun.jersey.contribs</groupId>
+         <artifactId>jersey-atom-abdera</artifactId>
       </dependency>
       <dependency>
          <groupId>junit</groupId>
@@ -66,6 +71,11 @@
             <artifactId>dropwizard-assets</artifactId>
             <version>${dropwizard.version}</version>
          </dependency>
+         <dependency>
+            <groupId>com.sun.jersey.contribs</groupId>
+            <artifactId>jersey-atom-abdera</artifactId>
+            <version>${jersey.version}</version>
+         </dependency>
          <!-- To fix same version between datomic and dropwizard -->
          <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -82,6 +92,7 @@
             <artifactId>jackson-annotations</artifactId>
             <version>${jackson.version}</version>
          </dependency>
+         <!-- Testing -->
          <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

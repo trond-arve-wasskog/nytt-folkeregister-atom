@@ -1,0 +1,3 @@
+logging:
+  loggers:
+    "datomic.db": WARN
