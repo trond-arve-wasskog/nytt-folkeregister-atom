@@ -1,23 +1,29 @@
 package ske.folkeregister.datomic.feed;
 
 import datomic.Connection;
+import datomic.Peer;
 import datomic.db.Datum;
 
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 
-import static datomic.Connection.TX_DATA;
+import static datomic.Connection.*;
+import static datomic.Util.map;
 
 @SuppressWarnings("unchecked")
 public class FeedGenerator implements Runnable {
 
-   private final Connection conn;
+   private static final String query =
+      "[:find ?ssn ?attrname ?value" +
+         " :in $ ?entity ?attr ?value" +
+         " :where [?entity ?attr ?value]" +
+         "        [?entity :person/ssn ?ssn]" +
+         "        [?attr :db/ident ?attrname]]";
 
    private final BlockingQueue<Map> txReportQueue;
 
    public FeedGenerator(Connection conn) {
-      this.conn = conn;
       txReportQueue = conn.txReportQueue();
    }
 
@@ -29,8 +35,26 @@ public class FeedGenerator implements Runnable {
             final List<Datum> txData = (List<Datum>) tx.get(TX_DATA);
 
             System.out.println("### Got tx - data:");
-            txData.forEach(data ->
-               System.out.printf("ent: %s attr: %s val: %s%n", data.e(), data.a(), data.v()));
+
+            System.out.println("Timestamp: " + txData.get(0).v());
+
+            txData
+               .stream()
+               .substream(1)
+               .map(datum -> {
+                  if (datum.added()) {
+                     return map(
+                        "add",
+                        queryFor(tx.get(DB_AFTER), datum)
+                     );
+                  } else {
+                     return map(
+                        "rem",
+                        queryFor(tx.get(DB_BEFORE), datum)
+                     );
+                  }
+               })
+               .forEach(System.out::println);
 
             /*
             Entry entry = Abdera.getInstance().newEntry();
@@ -55,5 +79,9 @@ public class FeedGenerator implements Runnable {
             e.printStackTrace();
          }
       }
+   }
+
+   private List<Object> queryFor(Object db, Datum datum) {
+      return Peer.q(query, db, datum.e(), datum.a(), datum.v()).iterator().next();
    }
 }

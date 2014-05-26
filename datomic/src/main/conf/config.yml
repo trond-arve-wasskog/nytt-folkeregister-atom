@@ -1,3 +1,6 @@
 logging:
   loggers:
     "datomic.db": WARN
+  appenders:
+    - type: console
+      logFormat: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
