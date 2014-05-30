@@ -72,6 +72,7 @@ public class FeedGenerator implements Runnable {
                .forEach(entry -> {
                   try {
                      // TODO - post to Atom Hopper?
+                     // curl -H "Content-Type: application/atom+xml" -X POST -d @entry.xml localhost:8080/namespace/feed/
                      System.out.println(Abdera.getNewWriter().write(entry));
                   } catch (Exception e) {
                      System.err.println("Får ikke skrevet entry: " + e.getMessage());
