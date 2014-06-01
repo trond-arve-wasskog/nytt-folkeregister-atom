@@ -1,11 +1,13 @@
 package ske.folkeregister.datomic.feed;
 
+import com.sun.jersey.api.client.WebResource;
 import datomic.Connection;
 import datomic.Peer;
 import datomic.db.Datum;
 import org.apache.abdera.Abdera;
 import org.apache.abdera.model.Entry;
 
+import javax.ws.rs.core.MediaType;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
@@ -25,8 +27,10 @@ public class FeedGenerator implements Runnable {
       "[:find ?ssn :in $ ?entity :where [?entity :person/ssn ?ssn]]";
 
    private final BlockingQueue<Map> txReportQueue;
+   private final WebResource feedResource;
 
-   public FeedGenerator(Connection conn) {
+   public FeedGenerator(Connection conn, WebResource feedResource) {
+      this.feedResource = feedResource;
       txReportQueue = conn.txReportQueue();
    }
 
@@ -50,6 +54,7 @@ public class FeedGenerator implements Runnable {
 
                   String ssn = queryForSSN(tx, e.getKey());
                   entry.addLink(entry.addLink("/person/" + ssn, "person"));
+                  entry.setTitle("Person " + ssn + " oppdatert");
 
                   e.getValue().forEach(datum -> {
                      if (datum.added()) {
@@ -71,15 +76,13 @@ public class FeedGenerator implements Runnable {
                })
                .forEach(entry -> {
                   try {
-                     // TODO - post to Atom Hopper?
-                     // curl -H "Content-Type: application/atom+xml" -X POST -d @entry.xml localhost:8080/namespace/feed/
-                     System.out.println(Abdera.getNewWriter().write(entry));
+                     feedResource.type(MediaType.APPLICATION_ATOM_XML_TYPE).post(entry);
                   } catch (Exception e) {
-                     System.err.println("Får ikke skrevet entry: " + e.getMessage());
+                     System.err.println("Problem posting feed entry: " + e.getMessage());
                   }
                });
          } catch (Exception e) {
-            System.err.println("### Yikes: " + e.getMessage());
+            System.err.println("Problem reading tx-report: " + e.getMessage());
             e.printStackTrace();
          }
       }
