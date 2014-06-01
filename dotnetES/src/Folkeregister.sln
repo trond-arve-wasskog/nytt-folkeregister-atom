@@ -11,7 +11,7 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Folkeregister.Contracts", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Folkeregister.Domain.Tests", "Folkeregister.Domain.Tests\Folkeregister.Domain.Tests.csproj", "{FBD36BEA-03CD-4685-BD8F-DB3805725BE6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Folkeregister.Api", "Folkeregister.Api\Folkeregister.Api.csproj", "{13D939AF-3C98-4720-8BD1-8F1BFB57F836}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Folkeregister.Web", "Folkeregister.Web\Folkeregister.Web.csproj", "{13D939AF-3C98-4720-8BD1-8F1BFB57F836}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

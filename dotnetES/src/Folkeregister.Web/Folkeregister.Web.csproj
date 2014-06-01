@@ -11,8 +11,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Folkeregister.Api</RootNamespace>
-    <AssemblyName>Folkeregister.Api</AssemblyName>
+    <RootNamespace>Folkeregister.Web</RootNamespace>
+    <AssemblyName>Folkeregister.Web</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -38,7 +38,45 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Fix, Version=0.8.1.52037, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Fix.0.8.1-pre\lib\net45\Fix.dll</HintPath>
+    </Reference>
+    <Reference Include="Fix.AspNet, Version=0.8.1.52037, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Fix.AspNet.0.8.1-pre\lib\net45\Fix.AspNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Folkeregister.Contracts, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Bin\Folkeregister.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.1.2.1\lib\net40\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Owin.1.2.1\lib\net45\Microsoft.AspNet.SignalR.Owin.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Simple.Owin.Static">
+      <HintPath>..\packages\Simple.Owin.Static.0.4.0-pre\lib\net45\Simple.Owin.Static.dll</HintPath>
+    </Reference>
+    <Reference Include="Simple.Web">
+      <HintPath>..\packages\Simple.Web.0.12.0-pre\lib\net40\Simple.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Simple.Web.AspNet">
+      <HintPath>..\packages\Simple.Web.AspNet.0.12.0-pre\lib\net40\Simple.Web.AspNet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Simple.Web.JsonNet">
+      <HintPath>..\packages\Simple.Web.JsonNet.0.12.0-pre\lib\net40\Simple.Web.JsonNet.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -57,6 +95,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -68,7 +107,27 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\Commands\BaseGetEndpoint.cs" />
+    <Compile Include="Api\Commands\BasePostEndpoint.cs" />
+    <Compile Include="Api\Commands\CreatePerson\GetEndpoint.cs" />
+    <Compile Include="Api\Commands\CreatePerson\PostEndpoint.cs" />
+    <Compile Include="Api\Commands\GetEndpoint.cs" />
+    <Compile Include="OwinAppSetup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Folkeregister.Domain\Folkeregister.Domain.csproj">
+      <Project>{47bb9ae8-28e7-4afd-83ab-c09895cd2b18}</Project>
+      <Name>Folkeregister.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Folkeregister.Infrastructure\Folkeregister.Infrastructure.csproj">
+      <Project>{562450ea-f364-45c2-a0be-27132b0b8503}</Project>
+      <Name>Folkeregister.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="RealTime\" />
+    <Folder Include="Static\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
