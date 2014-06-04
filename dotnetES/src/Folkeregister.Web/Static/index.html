@@ -5,5 +5,20 @@
             Event feed from folkeregisteret
         </title>
     </head>
-<h1>Hello world!</h1>
+    <h1>Hello world!</h1>
+    <script src="/scripts/jquery-2.1.1.min.js"></script>
+    <script src="/scripts/jquery.signalR-2.0.3.min.js"></script>
+    <script src="/realtime/hubs"></script>
+    <script>
+        $(function () {
+            var chat = $.connection.eventHub;
+            // Create a function that the hub can call back to display messages.
+            chat.client.send = function (name, message) {
+                alert(name + " " + message);
+            };
+            $.connection.hub.start().done(function () {
+                alert("started");
+            });
+        });
+    </script>
 </html>

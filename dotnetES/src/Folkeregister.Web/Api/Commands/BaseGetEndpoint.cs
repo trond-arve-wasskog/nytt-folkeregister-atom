@@ -5,7 +5,7 @@ using Simple.Web.Links;
 
 namespace Folkeregister.Web.Api.Commands
 {
-    [Canonical(typeof(CommandDescription<ICommand>))]
+    [Canonical(typeof(CommandDescription<ICommand>), uriTemplate: "/api/commands")]
     public abstract class BaseGetEndpoint<TCommand> : IGet, IOutput<CommandDescription<TCommand>>
     {
         public BaseGetEndpoint()
