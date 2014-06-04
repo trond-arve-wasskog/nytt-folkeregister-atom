@@ -6,7 +6,6 @@ using Simple.Web.Links;
 
 namespace Folkeregister.Web.Api.Commands
 {
-    [LinksFrom(typeof(CommandDescription<ICommand>), uriTemplate: "/api/commands")]
     public abstract class BasePostEndpoint<TCommand> : IPost, IInput<TCommand> where TCommand : ICommand
     {
         public Status Post()
