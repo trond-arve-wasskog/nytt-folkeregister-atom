@@ -17,9 +17,9 @@ namespace Folkeregister.Domain
             _commandDispatcher = CreateCommandDispatcher(domainRepository, preExecutionPipe, postExecutionPipe);
         }
 
-        public void ExecuteCommand(object command)
+        public void ExecuteCommand(ICommand command)
         {
-            _commandDispatcher.ExecuteCommand(command as ICommand);
+            _commandDispatcher.ExecuteCommand(command);
         }
 
         private CommandDispatcher CreateCommandDispatcher(IDomainRepository domainRepository, IEnumerable<Action<ICommand>> preExecutionPipe, IEnumerable<Action<object>> postExecutionPipe)

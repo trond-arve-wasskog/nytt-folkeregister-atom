@@ -6,18 +6,20 @@
         </title>
     </head>
     <h1>Hello world!</h1>
+    <ul id="log"></ul>
     <script src="/scripts/jquery-2.1.1.min.js"></script>
     <script src="/scripts/jquery.signalR-2.0.3.min.js"></script>
     <script src="/realtime/hubs"></script>
     <script>
         $(function () {
+            var logView = $("#log");
             var chat = $.connection.eventHub;
             // Create a function that the hub can call back to display messages.
-            chat.client.send = function (name, message) {
-                alert(name + " " + message);
+            chat.client.notify = function (notification) {
+                logView.prepend("<li>" + notification.Item1 + ": " + JSON.stringify(notification.Item2) + "</li>");
             };
             $.connection.hub.start().done(function () {
-                alert("started");
+                logView.prepend("<li>Connected to live feed</li>");
             });
         });
     </script>

@@ -10,7 +10,12 @@ namespace Folkeregister.Domain.Aggregates
     {
         public Person()
         {
-            
+            RegisterTransition<PersonCreated>(Apply);
+        }
+
+        private void Apply(PersonCreated @event)
+        {
+            Id = @event.Id;
         }
 
         private Person(Guid id, SSN ssn, Name name) : this()
