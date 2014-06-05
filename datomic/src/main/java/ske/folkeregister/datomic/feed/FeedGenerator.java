@@ -6,6 +6,8 @@ import datomic.Peer;
 import datomic.db.Datum;
 import org.apache.abdera.Abdera;
 import org.apache.abdera.model.Entry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.core.MediaType;
 import java.util.List;
@@ -18,11 +20,11 @@ import static datomic.Connection.*;
 @SuppressWarnings("unchecked")
 public class FeedGenerator implements Runnable {
 
+   private static final Logger log = LoggerFactory.getLogger(FeedGenerator.class);
+
    private static final Abdera abdera = Abdera.getInstance();
-   private static final String datum_query =
-      "[:find ?attrname" +
-         " :in $ ?attr" +
-         " :where [?attr :db/ident ?attrname]]";
+   private static final String attr_query =
+      "[:find ?attrname :in $ ?attr :where [?attr :db/ident ?attrname]]";
    public static final String ssn_query =
       "[:find ?ssn :in $ ?entity :where [?entity :person/ssn ?ssn]]";
 
@@ -41,7 +43,7 @@ public class FeedGenerator implements Runnable {
             final Map tx = txReportQueue.take();
             final List<Datum> txData = (List<Datum>) tx.get(TX_DATA);
 
-            System.out.println("Create feed entries tx: " + txData.get(0).v());
+            log.info("Create feed entries tx: {}", txData.get(0).v());
 
             txData
                .stream()
@@ -78,12 +80,11 @@ public class FeedGenerator implements Runnable {
                   try {
                      feedResource.type(MediaType.APPLICATION_ATOM_XML_TYPE).post(entry);
                   } catch (Exception e) {
-                     System.err.println("Problem posting feed entry: " + e.getMessage());
+                     log.error("Problem posting feed entry: {}", e.getMessage());
                   }
                });
          } catch (Exception e) {
-            System.err.println("Problem reading tx-report: " + e.getMessage());
-            e.printStackTrace();
+            log.error("Problem reading tx-report", e);
          }
       }
    }
@@ -93,6 +94,6 @@ public class FeedGenerator implements Runnable {
    }
 
    private String queryForAttrName(Object db, Object attr) {
-      return Peer.q(datum_query, db, attr).iterator().next().get(0).toString();
+      return Peer.q(attr_query, db, attr).iterator().next().get(0).toString();
    }
 }
