@@ -35,5 +35,10 @@ namespace Folkeregister.Domain.Aggregates
             }
             return new Person(id, ssn, name);
         }
+
+        public void AddAdressToPerson(Address address)
+        {
+            RaiseEvent(new AddressAdded(Id, address));
+        }
     }
 }

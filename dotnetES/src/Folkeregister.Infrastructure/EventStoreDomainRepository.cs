@@ -11,6 +11,7 @@ namespace Folkeregister.Infrastructure
     public class EventStoreDomainRepository : DomainRepositoryBase
     {
         private IEventStoreConnection _connection;
+        private const string Category = "folke";
 
         public EventStoreDomainRepository(IEventStoreConnection connection)
         {
@@ -19,7 +20,7 @@ namespace Folkeregister.Infrastructure
 
         private string AggregateToStreamName(Type type, Guid id)
         {
-            return string.Format("{0}-{1}", type.Name, id);
+            return string.Format("{0}-{1}-{2}", Category, type.Name, id);
         }
 
         public override IEnumerable<IEvent> Save<TAggregate>(TAggregate aggregate)

@@ -121,10 +121,12 @@
     <Compile Include="Api\Commands\AddAddressToPerson\PostEndpoint.cs" />
     <Compile Include="Api\Commands\BaseGetEndpoint.cs" />
     <Compile Include="Api\Commands\BasePostEndpoint.cs" />
+    <Compile Include="Api\Events\GetEndpoint.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="Api\Commands\CreatePerson\GetEndpoint.cs" />
     <Compile Include="Api\Commands\CreatePerson\PostEndpoint.cs" />
     <Compile Include="Api\Commands\GetEndpoint.cs" />
+    <Compile Include="MediaTypeHandlers\AtomMediaTypeHandler.cs" />
     <Compile Include="OwinAppSetup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RealTime\EventHub.cs" />

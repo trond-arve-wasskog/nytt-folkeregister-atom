@@ -20,7 +20,6 @@ namespace Folkeregister.Web
                     typeof(CreatePerson)
                 };
 
-        //public static void Setup(Action<Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>> use)
         public void Configuration(IAppBuilder app)
         {
 

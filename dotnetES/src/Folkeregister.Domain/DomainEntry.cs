@@ -28,6 +28,7 @@ namespace Folkeregister.Domain
 
             var personCommandHandler = new PersonCommandHandler(domainRepository);
             commandDispatcher.RegisterHandler<CreatePerson>(personCommandHandler.Handle);
+            commandDispatcher.RegisterHandler<AddAdressToPerson>(personCommandHandler.Handle);
 
 
             return commandDispatcher;
