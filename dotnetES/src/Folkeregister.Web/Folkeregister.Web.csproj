@@ -44,10 +44,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EventStore.Client.3.0.0-rc2\lib\net40\EventStore.ClientAPI.dll</HintPath>
     </Reference>
-    <Reference Include="Folkeregister.Contracts, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Bin\Folkeregister.Contracts.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.0.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.0.3\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
@@ -134,6 +130,10 @@
     <Compile Include="RealTime\EventHub.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Folkeregister.Contracts\Folkeregister.Contracts.fsproj">
+      <Project>{0c925a7d-8587-4fa8-abeb-a9338647dad6}</Project>
+      <Name>Folkeregister.Contracts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Folkeregister.Domain\Folkeregister.Domain.csproj">
       <Project>{47bb9ae8-28e7-4afd-83ab-c09895cd2b18}</Project>
       <Name>Folkeregister.Domain</Name>
