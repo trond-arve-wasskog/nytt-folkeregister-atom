@@ -1,5 +1,6 @@
 package ske.folkeregister.dw;
 
+import com.bazaarvoice.dropwizard.webjars.WebJarBundle;
 import com.sun.jersey.api.client.Client;
 import datomic.Connection;
 import io.dropwizard.Application;
@@ -24,6 +25,7 @@ public class Server extends Application<ServerConfig> {
 
    @Override
    public void initialize(Bootstrap<ServerConfig> bootstrap) {
+      bootstrap.addBundle(new WebJarBundle());
       bootstrap.addBundle(new AssetsBundle("/web/", "/web", "index.html"));
    }
 
