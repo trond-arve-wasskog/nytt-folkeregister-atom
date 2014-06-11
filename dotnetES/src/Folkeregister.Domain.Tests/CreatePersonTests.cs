@@ -8,6 +8,22 @@ using NUnit.Framework;
 namespace Folkeregister.Domain.Tests
 {
     [TestFixture]
+    public class AddAddressTests : TestBase
+    {
+        [Test]
+        public void AddingAnAddressToAPerson_ShouldAddAddress()
+        {
+            Guid id = Guid.NewGuid();
+            SSN sSN = null;
+            Name name = null;
+            Given(new PersonCreated(id, sSN, name));
+            var address = new Address("s1", "23", "1232", "Oslo");
+            When(new AddAdressToPerson(id, address));
+            Then(new AddressAdded(id, address));
+        }
+    }
+
+    [TestFixture]
     public class CreatePersonTests : TestBase
     {
         [Test]

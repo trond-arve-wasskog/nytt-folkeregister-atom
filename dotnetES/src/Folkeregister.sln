@@ -11,7 +11,14 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Folkeregister.Contracts", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Folkeregister.Domain.Tests", "Folkeregister.Domain.Tests\Folkeregister.Domain.Tests.csproj", "{FBD36BEA-03CD-4685-BD8F-DB3805725BE6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Folkeregister.Api", "Folkeregister.Api\Folkeregister.Api.csproj", "{13D939AF-3C98-4720-8BD1-8F1BFB57F836}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Folkeregister.Web", "Folkeregister.Web\Folkeregister.Web.csproj", "{13D939AF-3C98-4720-8BD1-8F1BFB57F836}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{0EC15ED5-D5DA-458C-9777-5422642E2A44}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

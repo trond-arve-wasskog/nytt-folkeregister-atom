@@ -31,5 +31,16 @@ namespace Folkeregister.Domain
             person = Person.Create(command.Id, command.SSN, command.Name);
             return person;
         }
+
+        public IAggregate Handle(AddAdressToPerson command)
+        {
+            var person = _domainRepository.GetById<Person>(command.Id);
+            if (person == null)
+            {
+                throw new AggregateNotFoundException("No person exist with id " + command.Id);
+            }
+            person.AddAdressToPerson(command.Address);
+            return person;
+        }
     }
 }

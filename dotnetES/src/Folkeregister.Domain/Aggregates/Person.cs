@@ -10,7 +10,12 @@ namespace Folkeregister.Domain.Aggregates
     {
         public Person()
         {
-            
+            RegisterTransition<PersonCreated>(Apply);
+        }
+
+        private void Apply(PersonCreated @event)
+        {
+            Id = @event.Id;
         }
 
         private Person(Guid id, SSN ssn, Name name) : this()
@@ -29,6 +34,11 @@ namespace Folkeregister.Domain.Aggregates
                 throw new InvalidNameException(name);
             }
             return new Person(id, ssn, name);
+        }
+
+        public void AddAdressToPerson(Address address)
+        {
+            RaiseEvent(new AddressAdded(Id, address));
         }
     }
 }
