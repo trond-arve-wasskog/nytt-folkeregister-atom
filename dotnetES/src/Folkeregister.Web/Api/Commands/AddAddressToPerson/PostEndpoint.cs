@@ -1,4 +1,5 @@
-﻿using Simple.Web;
+﻿using Folkeregister.Web.TypeDeserialization;
+using Simple.Web;
 using Simple.Web.Links;
 
 namespace Folkeregister.Web.Api.Commands.AddAddressToPerson
