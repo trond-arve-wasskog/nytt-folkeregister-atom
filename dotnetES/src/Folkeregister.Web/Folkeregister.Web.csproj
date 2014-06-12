@@ -117,13 +117,14 @@
   <ItemGroup>
     <Compile Include="Api\Commands\AddAddressToPerson\GetEndpoint.cs" />
     <Compile Include="Api\Commands\AddAddressToPerson\PostEndpoint.cs" />
+    <Compile Include="RealTime\EventStoreDeserializer.cs" />
     <Compile Include="TypeDeserialization\Argument.cs" />
     <Compile Include="Api\Commands\BaseGetEndpoint.cs" />
     <Compile Include="Api\Commands\BasePostEndpoint.cs" />
     <Compile Include="TypeDeserialization\CommandDescription.cs" />
     <Compile Include="TypeDeserialization\ObjectDescription.cs" />
     <Compile Include="TypeDeserialization\ObjectModel.cs" />
-    <Compile Include="Api\Events\GetEndpoint.cs" />
+    <Compile Include="Api\Events\Feed\GetEndpoint.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="Api\Commands\CreatePerson\GetEndpoint.cs" />
     <Compile Include="Api\Commands\CreatePerson\PostEndpoint.cs" />
