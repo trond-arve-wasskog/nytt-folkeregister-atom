@@ -7,7 +7,13 @@ namespace Folkeregister.Web
 {
     public static class Configuration
     {
+        private static IEventStoreConnection _connection;
         public static IEventStoreConnection CreateConnection()
+        {
+            return _connection = _connection ?? Connect();
+        }
+
+        private static IEventStoreConnection Connect()
         {
             ConnectionSettings settings =
                 ConnectionSettings.Create()

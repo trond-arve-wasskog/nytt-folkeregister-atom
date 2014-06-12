@@ -124,7 +124,7 @@
     <Compile Include="TypeDeserialization\CommandDescription.cs" />
     <Compile Include="TypeDeserialization\ObjectDescription.cs" />
     <Compile Include="TypeDeserialization\ObjectModel.cs" />
-    <Compile Include="Api\Events\Feed\GetEndpoint.cs" />
+    <Compile Include="Api\Events\Feed\GetOneEndpoint.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="Api\Commands\CreatePerson\GetEndpoint.cs" />
     <Compile Include="Api\Commands\CreatePerson\PostEndpoint.cs" />

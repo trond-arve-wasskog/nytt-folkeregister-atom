@@ -1,17 +1,78 @@
 ﻿<!DOCTYPE html>
 <html>
-    <head>
-        <title>
-            Event feed from folkeregisteret
-        </title>
-    </head>
-    <h1>Hello world!</h1>
+<head>
+    <title>
+        Event feed from folkeregisteret
+    </title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Hello world!</h1>
+
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <ul id="log"></ul>
+            </div>
+            <div class="col-lg-6">
+                <form role="form">
+                    <div class="form-group">
+                        <label for="Id">Id</label>
+                        <input type="text" class="form-control" name="Id" placeholder="Enter guid">
+                    </div>
+                    <div class="form-group">
+                        <label for="SSN.Value">SSN</label>
+                        <input type="text" class="form-control" name="SSN.Value" placeholder="SSN">
+                    </div>
+                    <div class="form-group">
+                        <label for="Name.Value">Name</label>
+                        <input type="text" class="form-control" name="Name.Value" placeholder="SSN">
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button> 
+                </form>
+            </div>
+        </div>
+    </div>
     <ul id="log"></ul>
     <script src="/scripts/jquery-2.1.1.min.js"></script>
     <script src="/scripts/jquery.signalR-2.0.3.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script src="/realtime/hubs"></script>
     <script>
         $(function () {
+            $("form").submit(function (e) {
+                var form = $(this);
+                var data = 
+                    {
+                        Id: '1b181d25-f371-4f56-b0e0-22f636d30781',
+                        SSN: {
+                            Value: '1111111111'
+                        },
+                        Name: {
+                            Value: 'Tomas'
+                        }
+                    };
+                var jsonData = JSON.stringify(data);
+                $.ajax({
+                    url: "/api/commands/createperson",
+                    data: jsonData, 
+                    type: "POST",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    succes: function(resultData) {
+                        alert("Success: " + resultData);
+                    }});
+                e.preventDefault();
+            });
+
             var logView = $("#log");
             var chat = $.connection.eventHub;
             // Create a function that the hub can call back to display messages.
@@ -23,4 +84,5 @@
             });
         });
     </script>
+</body>
 </html>
