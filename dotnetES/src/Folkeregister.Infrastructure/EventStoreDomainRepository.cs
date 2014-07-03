@@ -67,6 +67,9 @@ namespace Folkeregister.Infrastructure
             {
                 {
                     EventClrTypeHeader, @event.GetType().AssemblyQualifiedName
+                },
+                {
+                    "Category", "Folke"
                 }
             };
             var eventDataHeaders = SerializeObject(eventHeaders);
