@@ -15,10 +15,16 @@ namespace Folkeregister.Web
 
         private static IEventStoreConnection Connect()
         {
+            return Connect(ConfigurationManager.AppSettings["EventStore.UserName"],
+                ConfigurationManager.AppSettings["EventStore.Password"]);
+        }
+
+        private static IEventStoreConnection Connect(string userName, string password)
+        {
             ConnectionSettings settings =
                 ConnectionSettings.Create()
                     .UseConsoleLogger()
-                    .SetDefaultUserCredentials(new UserCredentials("admin", "changeit"));
+                    .SetDefaultUserCredentials(new UserCredentials(userName, password));
             var endPoint = new IPEndPoint(EventStoreIP, EventStorePort);
             var connection = EventStoreConnection.Create(settings, endPoint, null);
             connection.Connect();
