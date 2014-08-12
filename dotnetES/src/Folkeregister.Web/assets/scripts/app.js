@@ -2,7 +2,7 @@
     var folke = angular.module('folke', []);
 
 
-    folke.directive('commandContainer', function ($compile) {
+    folke.directive('commandContainer', function () {
         return {
             restrict: 'E',
             transclude: 'true',
@@ -13,20 +13,27 @@
             },
             template: '<div class="command-container">' +
                 '<div class="my-transclude"></div>' +
-                '<input type="button" class="btn btn-default" value="{{submitText}}" ng-click="sendCommand(command)" />' +
+                '<input type="button" class="btn btn-default" value="{{submitText}}" ng-click="sendCommand(command, commandName)" />' +
                 '</div>',
             controller: 'CommandContainerController',
             link: function (scope, element, attrs, ctrl, transclude) {
-                transclude(scope.$parent, function (clone, scope) {
+                transclude(scope.$parent, function (clone) {
                     element.find(".my-transclude").replaceWith(clone);
                 });
             }
         };
     });
 
-    folke.controller('CommandContainerController', function ($scope) {
-        $scope.sendCommand = function(command) {
-            console.log(command);
+    folke.controller('CommandContainerController', function ($scope, $http) {
+        var baseUrl = "http://localhost:52661/api/commands/";
+        $scope.sendCommand = function (command, commandName) {
+            var url = baseUrl + commandName;
+            $http.post(url, command).success(function (data) {
+                $scope.command = {};
+            }).error(function() {
+                alert("Failed to execute command: " + commandName);
+                console.log(command);
+            });
         }
     });
 

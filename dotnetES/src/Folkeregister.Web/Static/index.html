@@ -42,7 +42,24 @@
                 <command-container submit-text="Add address to person" command-name="addaddresstoperson" command="addAddressToPerson">
                     <h2>Add address to person</h2>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="Name.Value" placeholder="Name" ng-model="addAddressToPerson.Name.Value" />
+                        <label for="Id">Id</label>
+                        <input type="text" class="form-control" placeholder="Enter guid" ng-model="addAddressToPerson.Id" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Id">Street</label>
+                        <input type="text" class="form-control" placeholder="Street" ng-model="addAddressToPerson.Address.Street" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Id">Street number</label>
+                        <input type="text" class="form-control" placeholder="Street number" ng-model="addAddressToPerson.Address.StreetNumber" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Id">Postal code</label>
+                        <input type="text" class="form-control" placeholder="Postal code" ng-model="addAddressToPerson.Address.PostalCode" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Id">City</label>
+                        <input type="text" class="form-control" placeholder="City" ng-model="addAddressToPerson.Address.City" />
                     </div>
                 </command-container>
             </div>
