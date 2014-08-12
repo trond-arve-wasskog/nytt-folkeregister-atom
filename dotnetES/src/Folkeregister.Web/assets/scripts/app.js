@@ -1,6 +1,8 @@
 ﻿(function() {
     var folke = angular.module('folke', []);
-
+    folke.config(function($httpProvider) {
+        delete $httpProvider.defaults.headers.common['X-Requested-With'];
+    });
 
     folke.directive('commandContainer', function () {
         return {
@@ -37,6 +39,41 @@
         }
     });
 
+    folke.controller('ESPollingController', function ($scope, $http) {
+        $scope.events = [];
+        function getEvents(stream) {
+            //var config = { headers: { "ES-LongPoll": 15 } };
+            $http
+                .get(stream + "?embed=body") //, config)
+                .success(function(data) {
+                    var events = data.entries.map(function(e) {
+                        return JSON.parse(e.data);
+                    });
+                    events.reverse().forEach(function(e) {
+                        $scope.events.unshift(e);
+                    });
+                    var previousLink = data.links.filter(function(l) {
+                        return l.relation === "previous";
+                    });
+                    var link = stream;
+                    if (previousLink.length > 0) {
+                        link = previousLink[0].uri;
+                    }
+                    setTimeout(function() {
+                        getEvents(link);
+                    }, 2000);
+                });
+        }
+
+        getEvents("http://localhost:2113/streams/%24ce-folke");
+
+
+        //$scope.events = [
+        //    {name: 'tomas'},
+        //    { name: 'synne'},
+        //    { name: 'alf'}
+        //];
+    });
 })();
 
 

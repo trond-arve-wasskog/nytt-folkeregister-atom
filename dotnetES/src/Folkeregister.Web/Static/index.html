@@ -65,7 +65,11 @@
             </div>
             <div class="col-lg-6">
                 <h2>Event log</h2>
-                <ul id="log"></ul>
+                <ul id="log" ng-controller="ESPollingController">
+                    <li ng-repeat="event in events">
+                        <pre>{{event | json}}</pre>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
