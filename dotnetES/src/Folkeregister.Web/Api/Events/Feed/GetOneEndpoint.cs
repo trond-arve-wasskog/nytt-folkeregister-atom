@@ -1,5 +1,4 @@
 ﻿using EventStore.ClientAPI;
-using EventStore.ClientAPI.SystemData;
 using Folkeregister.Infrastructure;
 using Folkeregister.Web.RealTime;
 using Simple.Web;
@@ -13,8 +12,7 @@ namespace Folkeregister.Web.Api.Events
         public Status Get()
         {
             var connection = Configuration.CreateConnection();
-            var userCredentials = new UserCredentials("admin", "changeit");
-            var readEvent = connection.ReadEvent(EventStream, EventNumber, true, userCredentials);
+            var readEvent = connection.ReadEvent(EventStream, EventNumber, true);
             var eventStoreDeserializer = new EventStoreDeserializer();
             if (readEvent.Status == EventReadStatus.Success)
             {

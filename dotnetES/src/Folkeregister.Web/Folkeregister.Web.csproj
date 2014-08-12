@@ -44,10 +44,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EventStore.Client.3.0.0-rc2\lib\net40\EventStore.ClientAPI.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.0.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.0.3\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Owin, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -94,14 +90,19 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Scripts\jquery-2.1.1.intellisense.js" />
-    <Content Include="Scripts\jquery-2.1.1.js" />
-    <Content Include="Scripts\jquery-2.1.1.min.js" />
+    <None Include="assets\scripts\jquery-2.1.1.intellisense.js" />
+    <Content Include="assets\css\bootstrap-theme.min.css" />
+    <Content Include="assets\css\bootstrap.min.css" />
+    <Content Include="assets\scripts\angular.min.js" />
+    <Content Include="assets\scripts\app.js" />
+    <Content Include="assets\scripts\bootstrap.min.js" />
+    <Content Include="assets\scripts\jquery-2.1.1.js" />
+    <Content Include="assets\scripts\jquery-2.1.1.min.js" />
     <Content Include="Static\index.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="packages.config" />
-    <Content Include="Scripts\jquery-2.1.1.min.map" />
+    <Content Include="assets\scripts\jquery-2.1.1.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -110,8 +111,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Scripts\jquery.signalR-2.0.3.js" />
-    <Content Include="Scripts\jquery.signalR-2.0.3.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -132,7 +131,6 @@
     <Compile Include="MediaTypeHandlers\AtomMediaTypeHandler.cs" />
     <Compile Include="OwinAppSetup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RealTime\EventHub.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Folkeregister.Contracts\Folkeregister.Contracts.fsproj">

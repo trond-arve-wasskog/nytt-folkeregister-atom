@@ -2,7 +2,6 @@ using System;
 using System.Threading.Tasks;
 using Folkeregister.Contracts.Commands;
 using Folkeregister.Web;
-using Microsoft.AspNet.SignalR;
 using Microsoft.Owin;
 using Newtonsoft.Json;
 using Owin;
@@ -27,11 +26,10 @@ namespace Folkeregister.Web
             {
                 TypeNameHandling = TypeNameHandling.Objects
             };
-            var staticBuilder = Statics.AddFolderAlias("/Scripts", "/scripts").AddFileAlias("/Static/index.html", "/");
+
+            var staticBuilder = Statics.AddFolder("/assets").AddFileAlias("/Static/index.html", "/");
             app.Use(staticBuilder.Build());
 
-            var hubConfiguration = new HubConfiguration();
-            app.MapSignalR("/realtime", hubConfiguration);
             app.Run(context => Application.App(_ => null as Task)(context.Environment));
 
         }
