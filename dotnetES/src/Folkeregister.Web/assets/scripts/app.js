@@ -4,6 +4,16 @@
         delete $httpProvider.defaults.headers.common['X-Requested-With'];
     });
 
+    if (location.hostname.contains("localhost")) {
+        folke.constant("eventstoreSettings", {
+            url: "http://localhost:2113/"
+        });
+    } else {
+        folke.constant("eventstoreSettings", {
+            url: "http://frevents.cloudapp.net:2113/"
+        });
+    }
+
     folke.directive('commandContainer', function () {
         return {
             restrict: 'E',
@@ -27,7 +37,7 @@
     });
 
     folke.controller('CommandContainerController', function ($scope, $http) {
-        var baseUrl = "http://localhost:52661/api/commands/";
+        var baseUrl = "/api/commands/";
         $scope.sendCommand = function (command, commandName) {
             var url = baseUrl + commandName;
             $http.post(url, command).success(function (data) {
@@ -41,14 +51,14 @@
 
     folke.controller('GuidController', function ($scope, $http) {
         $scope.generateGuid = function() {
-            $http.get("http://localhost:52661/api/guid")
+            $http.get("/api/guid")
                 .success(function(data) {
                     $scope.guid = data.Guid;
                 });
         }
     });
 
-    folke.controller('ESPollingController', function ($scope, $http) {
+    folke.controller('ESPollingController', function ($scope, $http, eventstoreSettings) {
         $scope.events = [];
         function getEvents(stream) {
             //var config = { headers: { "ES-LongPoll": 15 } };
@@ -79,6 +89,6 @@
             });
         }
 
-        getEvents("http://localhost:2113/streams/%24ce-folke");
+        getEvents(eventstoreSettings.url + "streams/%24ce-folke");
     });
 })();
