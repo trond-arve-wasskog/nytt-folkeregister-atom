@@ -19,10 +19,12 @@
 
         <div class="row">
             <div class="col-lg-6">
-                <div>
+                <div ng-controller="GuidController">
                     <h2>Guid generator</h2>
-                    <input type="button" value="Generate guid" />
-                    <span></span>
+                    <div class="form-group">
+                        <input type="text" disabled="disabled" ng-model="guid" class="form-control"></input>
+                    </div>
+                    <input type="button" value="Generate guid" ng-click="generateGuid()" class="btn btn-default" />
                 </div>
                 <command-container submit-text="Create person" command-name="createperson" command="createPerson">
                     <h2>Create person</h2>

@@ -88,7 +88,11 @@ namespace Folkeregister.Infrastructure
 
         private byte[] SerializeObject(object obj)
         {
-            var jsonObj = JsonConvert.SerializeObject(obj);
+            var settings = new JsonSerializerSettings()
+            {
+                TypeNameHandling = TypeNameHandling.Objects
+            };
+            var jsonObj = JsonConvert.SerializeObject(obj, Formatting.None, settings);
             var data = Encoding.UTF8.GetBytes(jsonObj);
             return data;
         }

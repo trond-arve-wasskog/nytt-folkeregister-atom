@@ -39,6 +39,15 @@
         }
     });
 
+    folke.controller('GuidController', function ($scope, $http) {
+        $scope.generateGuid = function() {
+            $http.get("http://localhost:52661/api/guid")
+                .success(function(data) {
+                    $scope.guid = data.Guid;
+                });
+        }
+    });
+
     folke.controller('ESPollingController', function ($scope, $http) {
         $scope.events = [];
         function getEvents(stream) {
@@ -62,47 +71,14 @@
                     setTimeout(function() {
                         getEvents(link);
                     }, 2000);
-                });
+                })
+            .error(function() {
+                setTimeout(function () {
+                    getEvents(link);
+                }, 2000);
+            });
         }
 
         getEvents("http://localhost:2113/streams/%24ce-folke");
-
-
-        //$scope.events = [
-        //    {name: 'tomas'},
-        //    { name: 'synne'},
-        //    { name: 'alf'}
-        //];
     });
 })();
-
-
-// angular service - update log
-// CreatePersonController
-// AddAddressToPersonController
-
-//$(function () {
-//    $("form").submit(function (e) {
-//        var form = $(this);
-//        var data = 
-//            {
-//                Id: '1b181d25-f371-4f56-b0e0-22f636d30781',
-//                SSN: {
-//                    Value: '1111111111'
-//                },
-//                Name: {
-//                    Value: 'Tomas'
-//                }
-//            };
-//        var jsonData = JSON.stringify(data);
-//        $.ajax({
-//            url: "/api/commands/createperson",
-//            data: jsonData, 
-//            type: "POST",
-//            dataType: "json",
-//            contentType: "application/json; charset=utf-8",
-//            succes: function(resultData) {
-//                alert("Success: " + resultData);
-//            }});
-//        e.preventDefault();
-//    });
