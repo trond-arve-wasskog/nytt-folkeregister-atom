@@ -20,19 +20,29 @@ public class DatomicPersonApiTest {
    public void testListingChanges() throws Exception {
       final String ssn = "4321";
 
+      System.out.println("Creating initial person");
       personApi.updatePerson(map(
          ":person/ssn", ssn,
          ":person/name", "Test Person",
          ":person/sivilstatus", ":person.sivilstatus/ugift"
       ));
 
+      sleep1Sec();
+
+      System.out.println("Changing name and sivil-status of person");
       personApi.changeNameAndStatus(ssn, "Test Middlename Person", ":person.sivilstatus/gift");
 
+      sleep1Sec();
+
+      System.out.println("Changing sivil-status again");
       personApi.updatePerson(map(
          ":person/ssn", ssn,
          ":person/sivilstatus", ":person.sivilstatus/skilt"
       ));
 
+      sleep1Sec();
+
+      System.out.println("Change address of person");
       personApi.moveToNewAddress(ssn, "Street", "101", "0102");
 
       final List<Map> changes = personApi.changesForPerson(ssn);
@@ -40,6 +50,11 @@ public class DatomicPersonApiTest {
       assertEquals(4, changes.size());
 
       printChanges(changes);
+   }
+
+   private void sleep1Sec() throws InterruptedException {
+      System.out.println("Waiting 1 sec. to differenciate timestamps...");
+      Thread.sleep(1000);
    }
 
    @SuppressWarnings("unchecked")
@@ -74,9 +89,13 @@ public class DatomicPersonApiTest {
 
    @Before
    public void setUp() throws Exception {
+      System.out.print("Creating in-memory Datomic connection...");
       Connection conn = IO.newMemConnection();
+      System.out.println("Done!");
 
+      System.out.print("Transacting the database schema...");
       IO.transactAllFromFile(conn, "datomic/schema.edn");
+      System.out.println("Done!");
       //IO.transactAllFromFile(conn, "datomic/data.edn");
 
       personApi = new DatomicPersonApi(conn);

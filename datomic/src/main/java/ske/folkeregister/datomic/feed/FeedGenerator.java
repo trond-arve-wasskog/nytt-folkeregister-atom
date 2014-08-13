@@ -80,7 +80,7 @@ public class FeedGenerator implements Runnable {
                   try {
                      feedResource.type(MediaType.APPLICATION_ATOM_XML_TYPE).post(entry);
                   } catch (Exception e) {
-                     log.error("Problem posting feed entry: {}", e.getMessage());
+                     log.error("Problem posting feed entry: {} ({})", entry, e.getMessage());
                   }
                });
          } catch (Exception e) {
