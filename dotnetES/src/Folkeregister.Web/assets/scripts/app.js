@@ -4,7 +4,7 @@
         delete $httpProvider.defaults.headers.common['X-Requested-With'];
     });
 
-    if (location.hostname.contains("localhost")) {
+    if (location.hostname.indexOf("localhost") > -1) {
         folke.constant("eventstoreSettings", {
             url: "http://localhost:2113/"
         });
