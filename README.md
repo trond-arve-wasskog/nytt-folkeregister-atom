@@ -19,3 +19,6 @@ Foreløpige tanker:
 * [Datomic] (http://www.datomic.com/) og [EventStore] (http://geteventstore.com/) som datalager/modell
 * Vurder [AtomHopper] (http://atomhopper.org/) for Atom Feeds (Eventstore tilbyr Atom feeds som standard)
 * Kjør i AWS eller liknende med fulle volumer
+
+## Demo av .NET implementasjon med Eventstore kjørendes på Azure
+Det finns en enkel demoapplikasjon som går direkte mot API:t på http://frapi.azurewebsites.net/. Det er mulig å legge til nye personer og adresser til disse personene. Det er også en "near real time" log av alle event som har skjedd. Akkurat nå så er det en liten bug i eventstore som gjør at man ikke kan benytte seg av long-polling fra webbleseren som gjør at man må polle manuelt, hvilket gjøres med to sekunders intervall.

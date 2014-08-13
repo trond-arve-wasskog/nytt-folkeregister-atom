@@ -36,18 +36,26 @@ namespace Folkeregister.Infrastructure
         public override TResult GetById<TResult>(Guid id)
         {
             var streamName = AggregateToStreamName(typeof(TResult), id);
-            var eventsSlice = _connection.ReadStreamEventsForward(streamName, 0, int.MaxValue, false);
-            if (eventsSlice.Status == SliceReadStatus.StreamNotFound)
+            try
             {
-                throw new AggregateNotFoundException("Could not found aggregate of type " + typeof(TResult) + " and id " + id);
+                var eventsSlice = _connection.ReadStreamEventsForward(streamName, 0, int.MaxValue, false);
+                if (eventsSlice.Status == SliceReadStatus.StreamNotFound)
+                {
+                    throw new AggregateNotFoundException("Could not found aggregate of type " + typeof (TResult) +
+                                                         " and id " + id);
+                }
+                var deserializedEvents = eventsSlice.Events.Select(e =>
+                {
+                    var metadata = DeserializeObject<Dictionary<string, string>>(e.OriginalEvent.Metadata);
+                    var eventData = DeserializeObject(e.OriginalEvent.Data, metadata[EventClrTypeHeader]);
+                    return eventData as IEvent;
+                });
+                return BuildAggregate<TResult>(deserializedEvents);
             }
-            var deserializedEvents = eventsSlice.Events.Select(e =>
+            catch (Exception ex)
             {
-                var metadata = DeserializeObject<Dictionary<string, string>>(e.OriginalEvent.Metadata);
-                var eventData = DeserializeObject(e.OriginalEvent.Data, metadata[EventClrTypeHeader]);
-                return eventData as IEvent;
-            });
-            return BuildAggregate<TResult>(deserializedEvents);
+                throw;
+            }
         }
 
         private T DeserializeObject<T>(byte[] data)
@@ -67,6 +75,9 @@ namespace Folkeregister.Infrastructure
             {
                 {
                     EventClrTypeHeader, @event.GetType().AssemblyQualifiedName
+                },
+                {
+                    "Category", "Folke"
                 }
             };
             var eventDataHeaders = SerializeObject(eventHeaders);
@@ -77,7 +88,11 @@ namespace Folkeregister.Infrastructure
 
         private byte[] SerializeObject(object obj)
         {
-            var jsonObj = JsonConvert.SerializeObject(obj);
+            var settings = new JsonSerializerSettings()
+            {
+                TypeNameHandling = TypeNameHandling.Objects
+            };
+            var jsonObj = JsonConvert.SerializeObject(obj, Formatting.None, settings);
             var data = Encoding.UTF8.GetBytes(jsonObj);
             return data;
         }

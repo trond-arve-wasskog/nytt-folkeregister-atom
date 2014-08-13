@@ -16,8 +16,9 @@ namespace Folkeregister.Domain.Tests
             Guid id = Guid.NewGuid();
             SSN sSN = null;
             Name name = null;
-            Given(new PersonCreated(id, sSN, name));
             var address = new Address("s1", "23", "1232", "Oslo");
+
+            Given(new PersonCreated(id, sSN, name));
             When(new AddAdressToPerson(id, address));
             Then(new AddressAdded(id, address));
         }
