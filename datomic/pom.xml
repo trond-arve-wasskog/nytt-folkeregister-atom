@@ -21,7 +21,7 @@
       <dropwizard-webjars.version>0.2.0</dropwizard-webjars.version>
       <jquery.version>2.1.1</jquery.version>
       <underscorejs.version>1.6.0-3</underscorejs.version>
-      <react.version>0.10.0-1</react.version>
+      <routie.version>0.3.2</routie.version>
       <!-- Plugin versions -->
       <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
       <!-- Other properties -->
@@ -67,7 +67,7 @@
       </dependency>
       <dependency>
          <groupId>org.webjars</groupId>
-         <artifactId>react</artifactId>
+         <artifactId>routie</artifactId>
       </dependency>
    </dependencies>
    <dependencyManagement>
@@ -147,8 +147,8 @@
          </dependency>
          <dependency>
             <groupId>org.webjars</groupId>
-            <artifactId>react</artifactId>
-            <version>${react.version}</version>
+            <artifactId>routie</artifactId>
+            <version>${routie.version}</version>
          </dependency>
          <!-- Testing -->
          <dependency>
