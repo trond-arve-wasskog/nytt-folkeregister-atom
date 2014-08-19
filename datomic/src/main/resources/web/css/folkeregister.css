@@ -1,5 +1,9 @@
 body {
-    background-color: #83baea;
-    padding-left: 20px;
-    padding-top: 30px;
+   background-color: #83baea;
+   padding-left: 20px;
+   padding-top: 30px;
+}
+
+.pure-button {
+   margin-right: 5px;
 }
