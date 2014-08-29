@@ -15,6 +15,8 @@
          });
 
          $main.append($personlist);
+
+         $("#extra").html("");
       });
    }
 
@@ -65,9 +67,27 @@
 
       $extra.html("<h1>Endringer</h1>");
 
+      var $changelist = $("<ul/>");
+
       _.each(changes, function(change) {
          console.log("Endring", new Date(change[":timestamp"]), change);
+
+         var $changerow = $("<li/>");
+         $changerow.append(new Date(change[":timestamp"]));
+
+         var $entrylist = $("<ul/>");
+         _.each(change[":changes"], function(entry) {
+            _.each(_.keys(entry), function (attr) {
+               console.log("Attr", attr);
+               $entrylist.append("<li>" + attr + " (" + entry[attr][":old"] + " &#8594; " + entry[attr][":new"] + ")</li>");
+            });
+         });
+         $changerow.append($entrylist);
+
+         $changelist.append($changerow);
       });
+
+      $extra.append($changelist);
    }
 
    function loadPerson(ssn) {
