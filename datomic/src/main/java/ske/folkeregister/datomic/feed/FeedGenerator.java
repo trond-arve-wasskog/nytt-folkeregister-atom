@@ -47,7 +47,7 @@ public class FeedGenerator implements Runnable {
 
             txData
                .stream()
-               .substream(1)
+               .skip(1)
                .collect(Collectors.groupingBy(Datum::e))
                .entrySet()
                .stream()
