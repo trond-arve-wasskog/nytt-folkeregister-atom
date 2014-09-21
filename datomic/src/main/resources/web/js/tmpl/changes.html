@@ -1,0 +1,12 @@
+<h1>Endringer</h1>
+<ul>
+   {#.}
+      <li>{@toDate value=timestamp /}
+         <ul>
+            {#changes}
+               <li>{attr} ({old} &#8594; {new})</li>
+            {/changes}
+         </ul>
+      </li>
+   {/.}
+</ul>

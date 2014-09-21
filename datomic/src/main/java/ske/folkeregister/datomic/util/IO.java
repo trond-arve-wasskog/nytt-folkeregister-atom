@@ -32,7 +32,10 @@ public class IO {
       return entity
          .keySet()
          .stream()
-         .collect(Collectors.toMap(key -> key, key -> attrToValue(entity, key)));
+         .collect(Collectors.toMap(
+            key -> key.substring(key.lastIndexOf("/") + 1),
+            key -> attrToValue(entity, key)
+         ));
    }
 
    public static Object attrToValue(Entity entity, Object key) {

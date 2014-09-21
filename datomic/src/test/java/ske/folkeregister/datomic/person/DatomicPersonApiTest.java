@@ -61,9 +61,9 @@ public class DatomicPersonApiTest {
    private void printChanges(List<Map> changes) {
       System.out.println("\n### Changes for person: ###");
       changes.forEach(changeset -> {
-         System.out.println("\nTidspunkt: " + changeset.get(":timestamp"));
+         System.out.println("\nTidspunkt: " + changeset.get("timestamp"));
          System.out.println("Endringer:");
-         ((List) changeset.get(":changes")).forEach(obj -> System.out.println("\t" + obj));
+         ((List) changeset.get("changes")).forEach(obj -> System.out.println("\t" + obj));
       });
    }
 
@@ -81,8 +81,8 @@ public class DatomicPersonApiTest {
 
       final Map person = personApi.getPerson(ssn);
 
-      assertEquals(ssn, person.get(":person/ssn"));
-      assertEquals(name, person.get(":person/name"));
+      assertEquals(ssn, person.get("ssn"));
+      assertEquals(name, person.get("name"));
 
       assertTrue("Person not in all persons", personApi.findAllPersons().contains(person));
    }

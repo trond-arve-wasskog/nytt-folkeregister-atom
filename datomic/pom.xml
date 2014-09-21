@@ -20,8 +20,9 @@
       <!-- Webjars -->
       <dropwizard-webjars.version>0.2.0</dropwizard-webjars.version>
       <jquery.version>2.1.1</jquery.version>
-      <underscorejs.version>1.6.0-3</underscorejs.version>
+      <lodash.version>2.4.1-6</lodash.version>
       <routie.version>0.3.2</routie.version>
+      <dustjs-linkedin.version>2.4.0-1</dustjs-linkedin.version>
       <!-- Plugin versions -->
       <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
       <!-- Other properties -->
@@ -63,11 +64,15 @@
       </dependency>
       <dependency>
          <groupId>org.webjars</groupId>
-         <artifactId>underscorejs</artifactId>
+         <artifactId>lodash</artifactId>
       </dependency>
       <dependency>
          <groupId>org.webjars</groupId>
          <artifactId>routie</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>org.webjars</groupId>
+         <artifactId>dustjs-linkedin</artifactId>
       </dependency>
    </dependencies>
    <dependencyManagement>
@@ -142,13 +147,18 @@
          </dependency>
          <dependency>
             <groupId>org.webjars</groupId>
-            <artifactId>underscorejs</artifactId>
-            <version>${underscorejs.version}</version>
+            <artifactId>lodash</artifactId>
+            <version>${lodash.version}</version>
          </dependency>
          <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>routie</artifactId>
             <version>${routie.version}</version>
+         </dependency>
+         <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>dustjs-linkedin</artifactId>
+            <version>${dustjs-linkedin.version}</version>
          </dependency>
          <!-- Testing -->
          <dependency>

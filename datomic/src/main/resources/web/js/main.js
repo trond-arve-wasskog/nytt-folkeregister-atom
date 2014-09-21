@@ -1,93 +1,31 @@
-(function () {
+(function (nf) {
    "use strict";
 
    function loadAllPersons() {
-      $.get("/persons", function (persons) {
-         var $main = $("#main");
-
-         $main.html("<h1>Personer</h1>");
-
-         var $personlist = $("<ul/>");
-
-         _.each(persons, function (person) {
-            var $link = $("<a href='#" + person[":person/ssn"] + "'>" + person[":person/name"] + "</a>");
-            $personlist.append($("<li/>").append($link));
-         });
-
-         $main.append($personlist);
-
-         $("#extra").html("");
+      $.get("/persons").done(function (persons) {
+         nf.tmpl.render("persons", {persons: persons}, $("#main"))
+            .done(function () {
+               $("#extra").html("");
+            });
       });
    }
 
    function showPerson(ssn, person) {
-      var $main = $("#main");
-
-      $main.html("<h1>Persondetaljer</h1>");
-
-      var $fieldset = $("<fieldset/>");
-
-      createInput($fieldset, "ssn", ssn, "Fødselsnummer");
-      createInput($fieldset, "name", person[":person/name"], "Navn");
-      createInput($fieldset, "birthplace", person[":person/birthplace"], "Fødested");
-      createInput($fieldset, "sivilstatus", person[":person/sivilstatus"], "Sivilstatus");
-
-      var address = person[":person/address"];
-      if (address) {
-         createInput(
-            $fieldset,
-            "address_street",
-               address[":address/street"] + " " + address[":address/streetnumber"],
-            "Adresse"
-         );
-         createInput($fieldset, "address_postnumber", address[":address/postnumber"], "");
-      }
-
-      var $buttonDiv = $("<div class='pure-controls'/>");
-
       var clickFn = function () {
          console.log("Yoz clicked the button!", $(this).text());
       };
 
-      createButton($buttonDiv, "Flytting", clickFn);
-      createButton(
-         $buttonDiv,
-         "Navneendring",
-         _.bind(changeName, this, person[":person/name"], ssn)
-      );
-      createButton($buttonDiv, "Statusendring", clickFn);
+      nf.tmpl.renderFn("person", person, function (html) {
+         $("#main").html(html);
 
-      $fieldset.append($buttonDiv);
-
-      $main.append($("<form class='pure-form pure-form-aligned'/>").append($fieldset));
+         $("#moveBtn").click(clickFn);
+         $("#renameBtn").click(_.bind(changeName, this, person["name"], ssn));
+         $("#statusBtn").click(clickFn);
+      });
    }
 
    function showChanges(changes) {
-      var $extra = $("#extra");
-
-      $extra.html("<h1>Endringer</h1>");
-
-      var $changelist = $("<ul/>");
-
-      _.each(changes, function(change) {
-         console.log("Endring", new Date(change[":timestamp"]), change);
-
-         var $changerow = $("<li/>");
-         $changerow.append(new Date(change[":timestamp"]));
-
-         var $entrylist = $("<ul/>");
-         _.each(change[":changes"], function(entry) {
-            _.each(_.keys(entry), function (attr) {
-               console.log("Attr", attr);
-               $entrylist.append("<li>" + attr + " (" + entry[attr][":old"] + " &#8594; " + entry[attr][":new"] + ")</li>");
-            });
-         });
-         $changerow.append($entrylist);
-
-         $changelist.append($changerow);
-      });
-
-      $extra.append($changelist);
+      nf.tmpl.render("changes", changes, $("#extra"));
    }
 
    function loadPerson(ssn) {
@@ -119,27 +57,10 @@
       }
    }
 
-   function createButton($buttonDiv, text, fn) {
-      var $button = $("<button type='button' class='pure-button pure-button-primary'>" + text + "</button>");
-      $button.click(fn);
-      $buttonDiv.append($button);
-   }
-
-   function createInput($parent, id, value, label) {
-      if (value) {
-         var $div = $("<div class='pure-control-group'>");
-
-         var $label = $("<label for='" + id + "'>" + label + "</label>");
-         var $input = $("<input readonly class='pure-input-rounded' id='" + id + "' type='text' placeholder='" + label + "' value='" + value + "'>");
-
-         $div.append($label, $input);
-
-         $parent.append($div);
-      }
-   }
+   nf.tmpl.init();
 
    routie({
       "": loadAllPersons,
       ":ssn": loadPerson
    });
-})();
+})(nf);

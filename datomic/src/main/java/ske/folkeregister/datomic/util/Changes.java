@@ -28,8 +28,8 @@ public class Changes {
          .map(changes -> {
             final Object tx = changes.get(0).get(0);
             return map(
-               ":changes", mapChangesForEntity(db, entityId, changes),
-               ":timestamp", db.asOf(tx).entity(tx).get(":db/txInstant")
+               "changes", mapChangesForEntity(db, entityId, changes),
+               "timestamp", db.asOf(tx).entity(tx).get(":db/txInstant")
             );
          })
          // Return as a list of change-maps
@@ -61,10 +61,9 @@ public class Changes {
 
             // Create map with attribute-name -> old/new value
             return map(
-               attrAfter, map(
-                  ":old", oldVal,
-                  ":new", newVal
-               )
+               "attr", attrAfter.toString(),
+               "old", oldVal,
+               "new", newVal
             );
          })
          .collect(Collectors.toList());

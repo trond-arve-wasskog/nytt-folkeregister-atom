@@ -1,0 +1,18 @@
+<h1>Persondetaljer</h1>
+<form class="pure-form pure-form-aligned">
+   <fieldset>
+      {>input id="ssn" label="Fødselsnummer" value=ssn /}
+      {>input id="name" label="Navn" value=name /}
+      {>input id="birthplace" label="Fødested" value=birthplace /}
+      {>input id="sivilstatus" label="Sivilstatus" value=sivilstatus /}
+      {#address}
+         {>input id="address_street" label="Adresse" value="{address.street} {address.streetnumber}" /}
+         {>input id="address_postnumber" label="" value=address.postnumber /}
+      {/address}
+      <div class="pure-controls">
+         {>button id="moveBtn" label="Flytting" /}
+         {>button id="renameBtn" label="Navneendring" /}
+         {>button id="statusBtn" label="Statusendring" /}
+      </div>
+   </fieldset>
+</form>
