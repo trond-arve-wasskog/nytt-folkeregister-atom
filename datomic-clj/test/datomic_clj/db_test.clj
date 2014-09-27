@@ -88,3 +88,19 @@
     [(:timestamp (first changes)) (:timestamp (second changes))]
     => (chatty-checker [[ts-first ts-second]]
          (= -1 (compare ts-first ts-second)))))
+
+
+(fact "Deep walking should result in a fully realized object"
+  (let [eivind (find-by-ssn @db-atom "19107612345")
+        realized (deep-touch! @db-atom eivind)]
+    (dissoc realized :db/id :person/address) =>
+    {:person/name        "Eivind Waaler"
+     :person/birthplace  "Oslo"
+     :person/ssn         "19107612345"
+     :person/sivilstatus :person.sivilstatus/ugift}
+    (dissoc (:person/address realized) :db/id) =>
+    {:address/street       "Majorstuveien"
+     :address/streetnumber "16"
+     :address/postnumber   "0367"}
+    (:db/id realized) => identity
+    (get-in realized [:person/address :db/id]) => identity))

@@ -1,13 +1,25 @@
 (ns datomic-clj.db
+  (:import (datomic Entity))
   (:require [com.stuartsierra.component :as component]
-            [datomic.api :as d]))
+            [datomic.api :as d]
+            [clojure.walk :as walk]))
 
 (defn conn [db]
-  (d/db db))
+  (if-let [conn (:connection db)]
+    (d/db conn)
+    (d/db db)))
+
+(defn deep-touch! [db entity]
+  (apply merge {:db/id (:db/id entity)}
+    (map (fn [[k v]]
+           (if (instance? Entity v)
+             [k (deep-touch! db v)]
+             [k v]))
+      (d/touch entity))))
 
 (defn find-all-persons [db]
   (let [conn (conn db)]
-    (map #(->> % first (d/entity conn) d/touch)
+    (map #(->> % first (d/entity conn) (deep-touch! db))
       (d/q '[:find ?e :where [?e :person/name]] conn))))
 
 (defn id-by-ssn [db ssn]
@@ -78,5 +90,3 @@
       (assoc this :connection conn)))
   (stop [this]
     (dissoc this :connection)))
-
-
