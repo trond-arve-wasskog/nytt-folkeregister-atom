@@ -27,9 +27,21 @@
           (when new-status [:person/sivilstatus new-status]))])
     (throw (IllegalStateException. (str "Could not find ssn " ssn)))))
 
-(defn save-or-update-person [db m]
-  @(d/transact db
-     [(merge {:db/id (d/tempid :db.part/user)} m)]))
+(defn save-or-update-entity [db & maps]
+  (->> maps
+    (map (fn [m] (merge {:db/id (d/tempid :db.part/user)} m)))
+    (d/transact db)
+    deref))
+
+(defn move-to-new-address [db ssn street number postnumber]
+  (let [adr-id (d/tempid :db.part/user)]
+    (save-or-update-entity db
+      {:db/id                adr-id
+       :address/postnumber   postnumber
+       :address/street       street
+       :address/streetnumber number}
+      {:person/ssn ssn
+       :person/address adr-id})))
 
 (defn entity-by-id [db id]
   (d/entity (conn db) id))

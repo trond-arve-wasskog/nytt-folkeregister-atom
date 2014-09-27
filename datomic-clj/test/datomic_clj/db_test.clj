@@ -56,10 +56,15 @@
   (change-name-and-status @db-atom "-111" "alf" nil) => (throws IllegalStateException))
 
 (fact "Updating anything about person should work"
-  (save-or-update-person @db-atom
+  (save-or-update-entity @db-atom
     {:person/ssn  "19107612345"
      :person/name "Eivind Waaler 2"})
   (:person/name (find-by-ssn @db-atom "19107612345")) => "Eivind Waaler 2")
+
+(fact "Changing address should work"
+  (move-to-new-address @db-atom "23013454321" "Henrik Ibsens gate" "1" "0010")
+  (merge {} (d/touch (:person/address (find-by-ssn @db-atom "23013454321")))) =>
+  {:address/street "Henrik Ibsens gate", :address/streetnumber "1", :address/postnumber "0010"})
 
 (fact "Getting history for one person, without change"
   (let [dbid (id-by-ssn @db-atom "23013454321")
