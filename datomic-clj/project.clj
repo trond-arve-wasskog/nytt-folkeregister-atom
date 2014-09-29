@@ -20,7 +20,9 @@
                  [ring/ring-json "0.3.1"]
                  [hiccup "1.0.5"]]
   :main folkereg.core
-  :profiles {:dev {:dependencies [[midje "1.6.3"]
+  :uberjar-name "folkereg.jar"
+  :profiles {:uberjar {:aot [folkereg.core]}
+             :dev {:dependencies [[midje "1.6.3"]
                                   [flare "0.2.5"]]
                    :plugins [[lein-midje "3.1.3"]]
                    :resource-paths ["test-resources"]

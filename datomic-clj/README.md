@@ -1,14 +1,41 @@
-# datomic-clj
+# folkereg
 
-A Clojure library designed to ... well, that part is up to you.
+Eksempel applikasjon for foleregister bygget med Clojure og Datomic.
 
-## Usage
+Foreløpig kun backend, som har omtrent tilsvarende funksjonlitet som Java Datomic eksempelet.
 
-FIXME
+## Bygging og oppstart
 
-## License
+Bygges med [Leiningen](http://leiningen.org/).
 
-Copyright © 2014 FIXME
+```
+lein do clean, midje, uberjar
+```
 
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+Kan kjøres via leiningen
+
+```
+lein ring server
+```
+
+Eller som standalone
+
+```
+java -jar target/folkereg.jar
+```
+
+Appen starter default på [http://localhost:3000](http://localhost:3000).
+
+Konfigurasjon gjøres via ./folkrereg-config.edn, ellers er det innebygd default config.
+
+Se src/folkereg/core.clj#config-schema for hva tillatt config er.
+
+## TODO
+
+* ClojureScript frontend
+* Deployment (Heroku?)
+* Database migrering
+* Logge oppsett
+* Mer konfigurasjon
+* Tilgangskontroll
+* Osv...
