@@ -1,5 +1,5 @@
-(ns datomic-clj.core-test
-  (:require [datomic-clj.core :refer :all]
+(ns folkereg.core-test
+  (:require [folkereg.core :refer :all]
             [clojure.java.io :as io])
   (:use midje.sweet))
 

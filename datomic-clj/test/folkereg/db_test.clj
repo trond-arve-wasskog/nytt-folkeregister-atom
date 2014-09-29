@@ -1,8 +1,8 @@
-(ns datomic-clj.db-test
+(ns folkereg.db-test
   (:import (java.util UUID))
   (:require
     [clojure.java.io :as io]
-    [datomic-clj.db :refer :all]
+    [folkereg.db :refer :all]
     [com.stuartsierra.component :as c]
     [datomic.api :as d])
   (:use midje.sweet))

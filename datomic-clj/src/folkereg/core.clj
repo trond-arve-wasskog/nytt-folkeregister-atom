@@ -1,4 +1,4 @@
-(ns datomic-clj.core
+(ns folkereg.core
   (:gen-class)
   (:import (java.io PushbackReader IOException))
   (:require [liberator.core :refer [resource defresource]]
@@ -10,9 +10,9 @@
             [clojure.edn :as edn]
             [schema.core :as s]
             [clojure.tools.logging :as log]
-            [datomic-clj.db :as db]
+            [folkereg.db :as db]
             [prone.middleware :as prone]
-            [datomic-clj.system :as sys]
+            [folkereg.system :as sys]
             [ring.middleware.json :refer [wrap-json-response]]
             [ring.util.response :refer [response]]
             [hiccup.core :as h]))

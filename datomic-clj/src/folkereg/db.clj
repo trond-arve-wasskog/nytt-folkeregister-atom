@@ -1,4 +1,4 @@
-(ns datomic-clj.db
+(ns folkereg.db
   (:import (datomic Entity)
            (java.io PushbackReader))
   (:require [com.stuartsierra.component :as component]

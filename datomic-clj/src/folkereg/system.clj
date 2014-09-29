@@ -1,7 +1,7 @@
-(ns datomic-clj.system
-  (:import (datomic_clj.db Db))
+(ns folkereg.system
+  (:import (folkereg.db Db))
   (:require [com.stuartsierra.component :as component]
-            [datomic-clj.db :refer [new-db]]))
+            [folkereg.db :refer [new-db]]))
 
 (defn system [config]
   (component/start

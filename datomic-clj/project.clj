@@ -1,9 +1,9 @@
-(defproject datomic-clj "0.1.0-SNAPSHOT"
+(defproject folkereg "0.1.0-SNAPSHOT"
   :description "Clojure/Datomic impl av folkeregister backend"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :plugins [[lein-ring "0.8.11" :exclusions [org.clojure/clojure]]]
-  :ring {:handler datomic-clj.core/handler}
+  :ring {:handler folkereg.core/handler}
   :repositories [["Datomic" "http://files.datomic.com/maven"]]
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [liberator "0.12.0"]
@@ -19,7 +19,7 @@
                  [cheshire "5.3.1"]
                  [ring/ring-json "0.3.1"]
                  [hiccup "1.0.5"]]
-  :main datomic-clj.core
+  :main folkereg.core
   :profiles {:dev {:dependencies [[midje "1.6.3"]
                                   [flare "0.2.5"]]
                    :plugins [[lein-midje "3.1.3"]]
