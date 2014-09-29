@@ -10,7 +10,13 @@
                  [compojure "1.1.9"]
                  [ring/ring-core "1.3.1"]
                  [com.stuartsierra/component "0.2.2"]
-                 [com.datomic/datomic-free "0.9.4766"]]
-  :profiles {:dev {:dependencies [[midje "1.6.3"]]
+                 [com.datomic/datomic-free "0.9.4766"]
+                 [ring/ring-jetty-adapter "1.3.0"]
+                 [jarohen/nomad "0.7.0"]
+                 [prismatic/schema "0.3.0"]]
+  :main datomic-clj.core
+  :profiles {:dev {:dependencies [[midje "1.6.3"]
+                                  [flare "0.2.5"]]
                    :plugins [[lein-midje "3.1.3"]]
-                   :resource-paths ["test-resources"]}})
+                   :resource-paths ["test-resources"]
+                   :injections [(require 'flare.midje) (flare.midje/install!)]}})
