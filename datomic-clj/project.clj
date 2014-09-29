@@ -17,7 +17,8 @@
                  [ch.qos.logback/logback-core "1.1.2"]
                  [prone "0.6.0"]
                  [cheshire "5.3.1"]
-                 [ring/ring-json "0.3.1"]]
+                 [ring/ring-json "0.3.1"]
+                 [hiccup "1.0.5"]]
   :main datomic-clj.core
   :profiles {:dev {:dependencies [[midje "1.6.3"]
                                   [flare "0.2.5"]]

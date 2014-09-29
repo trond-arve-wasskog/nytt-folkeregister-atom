@@ -14,7 +14,8 @@
             [prone.middleware :as prone]
             [datomic-clj.system :as sys]
             [ring.middleware.json :refer [wrap-json-response]]
-            [ring.util.response :refer [response]]))
+            [ring.util.response :refer [response]]
+            [hiccup.core :as h]))
 
 (defn get-system [ctx kw]
   (get-in ctx [:folkereg/system kw]))
@@ -48,9 +49,11 @@
 
 (defroutes default
   (GET "/" request
-    {:status  200
-     :headers {"Content-Type" "text/html"}
-     :body    "Hello World"}))
+    (response
+      (h/html [:html
+               [:body [:h1 "Velkommen til foleregister appen"]
+                [:div [:a {:href "persons"} "Vis alle registrerte brukere"]]
+                ]]))))
 
 (defroutes main
   default
