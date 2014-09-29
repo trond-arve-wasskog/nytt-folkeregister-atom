@@ -1,9 +1,7 @@
 (ns folkereg.core
   (:gen-class)
   (:import (java.io PushbackReader IOException))
-  (:require [liberator.core :refer [resource defresource]]
-            [liberator.dev :refer [wrap-trace]]
-            [ring.middleware.params :refer [wrap-params]]
+  (:require [ring.middleware.params :refer [wrap-params]]
             [compojure.core :refer [defroutes ANY GET POST context]]
             [ring.adapter.jetty :as jetty]
             [clojure.java.io :as io]
