@@ -1,8 +1,18 @@
 (ns datomic-clj.db
-  (:import (datomic Entity))
+  (:import (datomic Entity)
+           (java.io PushbackReader))
   (:require [com.stuartsierra.component :as component]
             [datomic.api :as d]
-            [clojure.walk :as walk]))
+            [clojure.java.io :as io]))
+
+(defn read-from-cp [f-name]
+  (->> f-name
+    (.getResourceAsStream (ClassLoader/getSystemClassLoader))
+    io/reader
+    PushbackReader.
+    read))
+
+(def schema (read-from-cp "schema.edn"))
 
 (defn conn [db]
   (if-let [conn (:connection db)]
@@ -83,10 +93,19 @@
       (sort-by first)
       (map (partial transaction-changes db dbid)))))
 
-(defrecord db [url connection]
+(defn- run-migrations [conn]
+  (d/transact conn schema))
+
+(defrecord Db [url connection]
   component/Lifecycle
   (start [this]
-    (let [conn (d/connect url)]
+    (let [new-db (d/create-database url)
+          conn (d/connect url)]
+      (when new-db
+        (run-migrations conn))
       (assoc this :connection conn)))
   (stop [this]
     (dissoc this :connection)))
+
+(defn new-db [url]
+  (map->Db {:url url}))

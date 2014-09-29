@@ -1,6 +1,5 @@
 (ns datomic-clj.db-test
-  (:import (java.io PushbackReader)
-           (java.util UUID))
+  (:import (java.util UUID))
   (:require
     [clojure.java.io :as io]
     [datomic-clj.db :refer :all]
@@ -13,14 +12,6 @@
 (defn db-name []
   (str "datomic:mem://" (str (UUID/randomUUID))))
 
-(defn read-from-cp [f-name]
-  (->> f-name
-    (.getResourceAsStream (ClassLoader/getSystemClassLoader))
-    io/reader
-    PushbackReader.
-    read))
-
-(def schema (read-from-cp "schema.edn"))
 (def data (read-from-cp "data.edn"))
 
 (defn db-init! []

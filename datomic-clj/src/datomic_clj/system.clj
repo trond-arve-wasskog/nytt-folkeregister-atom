@@ -1,8 +1,9 @@
 (ns datomic-clj.system
-  (:require [com.stuartsierra.component :as component]))
+  (:import (datomic_clj.db Db))
+  (:require [com.stuartsierra.component :as component]
+            [datomic-clj.db :refer [new-db]]))
 
-
-(defrecord Database [host port uname pwd connection]
-  component/Lifecycle
-  (start [this])
-  (stop [this]))
+(defn system [config]
+  (component/start
+    (component/system-map
+      :db (new-db (:db-url config)))))
